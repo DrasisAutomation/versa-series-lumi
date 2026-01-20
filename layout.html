@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>200px Square Switch Panel</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #0b2a3a, #0f4c6a);
+  font-family: Arial, sans-serif;
+}
+
+/* MAIN PANEL */
+.panel {
+  display: grid;
+  grid-template-columns: repeat(4, 200px);
+  grid-auto-rows: 200px;
+  gap: 20px;
+}
+
+/* SWITCH CONTAINER (FIXED SIZE) */
+.switch {
+  width: 200px;
+  height: 200px;
+  display: grid;
+  gap: 2px;
+  background: #1f1f1f;
+  padding: 4px;
+  border-radius: 12px;
+  border: 2px solid #2f2f2f;
+}
+
+/* SQUARE BUTTON */
+.switch button {
+  width: 100%;
+  height: 100%;
+  background: #2a2a2a;
+  border: none;
+  color: #eaeaea;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.switch button:hover {
+  background: #3a3a3a;
+}
+
+.switch button:active {
+  background: #4aa3ff;
+  color: #000;
+}
+
+/* ROW × COLUMN DEFINITIONS */
+.s1 { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+
+.s2 { grid-template-columns: 1fr; grid-template-rows: repeat(2, 1fr); }
+
+.s3 { grid-template-columns: 1fr; grid-template-rows: repeat(3, 1fr); }
+
+.s4 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
+
+.s5 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr); }
+
+.s6 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(4, 1fr); }
+
+</style>
+</head>
+
+<body>
+
+<div class="panel">
+
+  <div class="switch s1">
+    <button>Balcony</button>
+  </div>
+
+  <div class="switch s2">
+    <button>On</button>
+    <button>Off</button>
+  </div>
+
+  <div class="switch s3">
+    <button>On</button>
+    <button>Sleep</button>
+    <button>Off</button>
+  </div>
+
+  <div class="switch s4">
+    <button>On</button>
+    <button>Off</button>
+    <button>Meeting</button>
+    <button>Shown</button>
+  </div>
+
+  <div class="switch s5">
+    <button>All On</button>
+    <button>All Off</button>
+    <button>Meeting</button>
+    <button>Shown</button>
+    <button>Open</button>
+    <button>Close</button>
+  </div>
+
+  <div class="switch s6">
+    <button>All On</button>
+    <button>All Off</button>
+    <button>Meeting</button>
+    <button>Shown</button>
+    <button>Open</button>
+    <button>Close</button>
+    <button>Balcony</button>
+    <button>Sleep</button>
+  </div>
+
+</div>
+
+</body>
+</html>

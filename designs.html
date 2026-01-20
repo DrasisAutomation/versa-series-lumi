@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="subject" content="Lumi Switch Designs">
+    <meta name="description" content="My Lumi Switch Design Configurations">
+    <meta charset="UTF-8">
+    <title>My Switch Designs</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #fff;
+            color: #222;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            background: #1e3a5f;
+            color: white;
+            padding: 10px 40px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 40px 0 20px;
+            color: #1e3a5f;
+        }
+
+        .design-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .design-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e9ecef;
+            overflow: hidden;
+        }
+
+        .summary-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .summary-preview {
+            flex: 1;
+        }
+
+        .summary-details {
+            flex: 1;
+        }
+
+        .summary-preview h4,
+        .summary-details h4 {
+            color: #1e3a5f;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            text-align: center;
+            border-bottom: 2px solid #1971c2;
+            padding-bottom: 8px;
+        }
+
+        /* Switch Preview Styles - IMPORTANT: Use background-image for print compatibility */
+        .preview-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .switch-preview-box {
+            display: grid;
+            gap: 2px;
+            background: #000000;
+            padding: 1px;
+            border-radius: 4px;
+            border: 2px solid #2f2f2f;
+            margin: 0 auto;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+        }
+
+        /* Switch grid sizes */
+        .switch-preview-box.size-1 {
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+            width: 120px;
+            height: 120px;
+        }
+
+        .switch-preview-box.size-2 {
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(2, 1fr);
+            width: 120px;
+            height: 120px;
+        }
+
+        .switch-preview-box.size-3 {
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(3, 1fr);
+            width: 120px;
+            height: 120px;
+        }
+
+        .switch-preview-box.size-4 {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            width: 120px;
+            height: 120px;
+        }
+
+        .switch-preview-box.size-6 {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            width: 120px;
+            height: 120px;
+        }
+
+        .switch-preview-box.size-8 {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            width: 120px;
+            height: 120px;
+        }
+
+        .switch-button {
+            width: 100%;
+            height: 100%;
+            border: none;
+            color: #eaeaea;
+            font-size: 10px;
+            cursor: default;
+            border-radius: 3px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            overflow: hidden;
+            /* Force color printing */
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+            /* For better print quality */
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            gap: 3px;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        .button-content img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            /* Important: Use filter for print compatibility */
+            filter: brightness(0) invert(1) drop-shadow(0 0 1px rgba(0, 0, 0, 1));
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        .button-text {
+            font-size: 8px;
+            text-align: center;
+            word-break: break-word;
+            padding: 0 2px;
+            color: #ffffff;
+            font-weight: bold;
+            text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 1px #000;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        .dash-symbol {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 1px #000;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        /* Color circle in table */
+        .color-circle {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 1px solid #ccc;
+            vertical-align: middle;
+            margin-left: 5px;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        /* Summary Table */
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .summary-table th,
+        .summary-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .summary-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .summary-table td:first-child {
+            font-weight: 600;
+            color: #495057;
+            width: 40%;
+        }
+
+        /* Watermark */
+        .watermark {
+            position: absolute;
+            font-size: 80px;
+            font-weight: bold;
+            color: rgba(30, 58, 95, 0.1);
+            z-index: -1;
+            pointer-events: none;
+            transform: rotate(-45deg);
+        }
+
+        .watermark-1 {
+            top: 20%;
+            left: 10%;
+        }
+
+        .watermark-2 {
+            top: 50%;
+            left: 60%;
+        }
+
+        .watermark-3 {
+            top: 80%;
+            left: 20%;
+        }
+
+        /* Actions */
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            gap: 10px;
+        }
+
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .editBtn {
+            background: #1971c2;
+            color: white;
+        }
+
+        .editBtn:hover {
+            background: #155a9c;
+        }
+
+        .deleteBtn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .deleteBtn:hover {
+            background: #c82333;
+        }
+
+        .printBtn {
+            background: #28a745;
+            color: white;
+            display: block;
+            margin: 30px auto;
+            padding: 12px 30px;
+            font-size: 16px;
+        }
+
+        .printBtn:hover {
+            background: #218838;
+        }
+
+        .backBtn {
+            background: #1e3a5f;
+            color: white;
+            margin: 20px;
+            padding: 10px 20px;
+            align-self: flex-start;
+        }
+
+        .backBtn:hover {
+            background: #155a9c;
+        }
+
+        /* Empty State */
+        .empty-message {
+            text-align: center;
+            color: #666;
+            font-size: 1.2rem;
+            margin: 50px 0;
+            grid-column: 1 / -1;
+        }
+
+        @media print {
+
+            /* Critical: Force all colors to print */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            /* INCREASE SWITCH SIZE IN PRINT - THIS IS THE ONLY CHANGE YOU NEED */
+            .switch-preview-box.size-1,
+            .switch-preview-box.size-2,
+            .switch-preview-box.size-3,
+            .switch-preview-box.size-4,
+            .switch-preview-box.size-6,
+            .switch-preview-box.size-8 {
+                width: 200px !important;
+                /* INCREASED - was 120px */
+                height: 200px !important;
+                /* INCREASED - was 120px */
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            /* ALSO increase button content size to match larger switch */
+            .button-content img {
+                width: 40px !important;
+                /* INCREASED - was 20px */
+                height: 40px !important;
+                /* INCREASED - was 20px */
+                filter: brightness(0) invert(1) drop-shadow(0 0 0.5px #000) !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .button-text {
+                font-size: 12px !important;
+                /* INCREASED - was 7px */
+                color: #ffffff !important;
+                text-shadow: 0 0 1px #000 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .dash-symbol {
+                font-size: 24px !important;
+                /* INCREASED - was 14px */
+                color: #ffffff !important;
+                text-shadow: 0 0 1px #000 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            /* REMOVE this duplicate rule that's overriding your changes: */
+            /* DELETE THIS SECTION - IT'S REDUNDANT AND SETS SMALLER SIZE */
+            /*
+    .switch-preview-box.size-1,
+    .switch-preview-box.size-2,
+    .switch-preview-box.size-3,
+    .switch-preview-box.size-4,
+    .switch-preview-box.size-6,
+    .switch-preview-box.size-8 {
+        width: 100px !important;
+        height: 100px !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    */
+
+            /* KEEP all your other existing print styles below... */
+            body {
+                background: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                display: block !important;
+                color: black !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            /* Hide non-printable elements */
+            header,
+            .backBtn,
+            .printBtn,
+            .actions,
+            h1 {
+                display: none !important;
+            }
+
+            /* Design grid adjustments */
+            .design-grid {
+                display: block !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                gap: 0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .design-card {
+                display: block !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 auto 20mm auto !important;
+                padding: 15mm !important;
+                box-sizing: border-box !important;
+                border: 2px solid #000 !important;
+                box-shadow: none !important;
+                background: #fff !important;
+                page-break-inside: avoid !important;
+                page-break-after: auto !important;
+                break-inside: avoid !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .summary-container {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: stretch !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                gap: 20px !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .summary-preview,
+            .summary-details {
+                width: 50% !important;
+                margin-bottom: 0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            /* Switch preview box for print */
+            .switch-preview-box {
+                background: #000000 !important;
+                border: 2px solid #2f2f2f !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                /* REMOVE this fixed height - let it scale with the width/height above */
+                /* height: 400px !important; */
+            }
+
+            /* Force button colors in print */
+            .switch-button {
+                background-color: inherit !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                /* Add subtle border for better visibility */
+                box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2) !important;
+            }
+
+            /* Color circles in table */
+            .color-circle {
+                display: inline-block !important;
+                width: 12px !important;
+                height: 12px !important;
+                border: 1px solid #666 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .summary-table {
+                width: 100% !important;
+                border-collapse: collapse !important;
+                font-size: 10px !important;
+                table-layout: fixed !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .summary-table th,
+            .summary-table td {
+                padding: 4px 6px !important;
+                border: 1px solid #555 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .summary-table th {
+                background-color: #f0f0f0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .watermark {
+                color: rgba(30, 58, 95, 0.06) !important;
+                font-size: 90px !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            @page {
+                margin: 15mm;
+                size: A4 portrait;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .design-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 20px;
+                padding: 15px;
+            }
+
+            .summary-container {
+                padding: 15px;
+            }
+
+            .switch-preview-box.size-1,
+            .switch-preview-box.size-2,
+            .switch-preview-box.size-3,
+            .switch-preview-box.size-4,
+            .switch-preview-box.size-6,
+            .switch-preview-box.size-8 {
+                width: 100px;
+                height: 100px;
+            }
+
+            .button-content img {
+                width: 20px;
+                height: 20px;
+            }
+
+            .button-text {
+                font-size: 7px;
+            }
+
+            .dash-symbol {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .design-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-container {
+                flex-direction: column;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .actions button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Authentication Check -->
+    <script>
+        // Check if user is authenticated
+        if (!sessionStorage.getItem('lumi_authenticated')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+
+    <header style="display: none;">
+        <div class="logo" style="display: flex; align-items: center; gap: 10px;">
+            <div
+                style="width: 32px; height: 32px; background-color: #3b82f6; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                L</div>
+            <span>Lumi Configurator</span>
+        </div>
+        <nav style="margin-left:auto;">
+            <button onclick="window.location.href='index.html'"
+                style="background:#3b82f6;color:white;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;font-weight:bold;">
+                New Design
+            </button>
+        </nav>
+    </header>
+
+    <h1>My Saved Switch Designs</h1>
+
+    <button class="backBtn" onclick="window.location.href='index.html'">← Back to Configurator</button>
+
+    <div class="design-grid" id="designGrid"></div>
+
+    <button id="printAllBtn" class="printBtn">Print All Designs</button>
+
+    <script>
+        const designGrid = document.getElementById('designGrid');
+        const designs = JSON.parse(localStorage.getItem('lumiDesigns') || '[]');
+
+        if (designs.length === 0) {
+            designGrid.innerHTML = '<div class="empty-message">No designs saved yet. Create your first design in the configurator!</div>';
+            document.getElementById('printAllBtn').style.display = 'none';
+        } else {
+            designs.forEach((design, index) => {
+                const card = document.createElement('div');
+                card.className = 'design-card';
+
+                card.innerHTML = `
+                    <div class="summary-container">
+                        <!-- Watermarks -->
+                        <div class="watermark watermark-1">LUMI</div>
+                        <div class="watermark watermark-2">LUMI</div>
+                        <div class="watermark watermark-3">LUMI</div>
+
+                        <div class="summary-preview">
+                            <h4>${design.switchLabel || 'Untitled Design'}</h4>
+                            <div class="preview-container">
+                                <div class="switch-preview-box size-${design.switches}" id="preview-${design.id}"></div>
+                            </div>
+                        </div>
+
+                        <div class="summary-details">
+                            <h4>Configuration Details</h4>
+                            <table class="summary-table">
+                                <tr>
+                                    <th>Configuration Item</th>
+                                    <th>Selected Option</th>
+                                </tr>
+                                <tr>
+                                    <td>Number of Switches</td>
+                                    <td>${design.switches}</td>
+                                </tr>
+                                <tr>
+                                    <td>Color</td>
+                                    <td>${design.colorName} <span class="color-circle" style="background-color: ${design.color};"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Engraving Type</td>
+                                    <td>${design.engravingType.charAt(0).toUpperCase() + design.engravingType.slice(1)}</td>
+                                </tr>
+                                <tr>
+                                    <td>Design Name</td>
+                                    <td>${design.switchLabel || 'Not specified'}</td>
+                                </tr>
+                                <tr>
+                                    <td>Date & Time</td>
+                                    <td>${new Date(design.timestamp).toLocaleString()}</td>
+                                </tr>
+                                ${design.isCustomColor ? `
+                                <tr>
+                                    <td>Custom Color</td>
+                                    <td>${design.customColorData?.name || 'Custom'} (#${design.color.replace('#', '')})</td>
+                                </tr>
+                                ` : ''}
+                                ${design.engravingType === 'text' && Object.keys(design.texts).length > 0 ? `
+                                <tr>
+                                    <td>Switch Texts</td>
+                                    <td>${Object.entries(design.texts).map(([key, value]) => `Switch ${key}: "${value}"`).join('<br>')}</td>
+                                </tr>
+                                ` : ''}
+                                ${design.engravingType === 'icon' && Object.keys(design.icons).length > 0 ? `
+                                <tr>
+                                    <td>Icons Used</td>
+                                    <td>${Object.keys(design.icons).length} icon(s)</td>
+                                </tr>
+                                ` : ''}
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <button class="editBtn" onclick="editDesign('${design.id}')">Edit Design</button>
+                        <button class="deleteBtn" onclick="deleteDesign('${design.id}', ${index})">Delete Design</button>
+                    </div>
+                `;
+
+                // Build the switch preview
+                const previewBox = card.querySelector(`#preview-${design.id}`);
+                buildSwitchPreview(previewBox, design);
+
+                designGrid.appendChild(card);
+            });
+        }
+
+        function buildSwitchPreview(previewBox, design) {
+            // Clear the preview box
+            previewBox.innerHTML = '';
+
+            // Create switches based on the design
+            for (let i = 1; i <= design.switches; i++) {
+                const switchButton = document.createElement('button');
+                switchButton.className = 'switch-button';
+
+                // IMPORTANT: Use style attribute with background-color for print compatibility
+                switchButton.setAttribute('style', `background-color: ${design.color} !important;`);
+                switchButton.style.backgroundColor = design.color;
+
+                // Add data attribute for backup
+                switchButton.setAttribute('data-color', design.color);
+
+                const buttonContent = document.createElement('div');
+                buttonContent.className = 'button-content';
+
+                // Set content based on engraving type
+                switch (design.engravingType) {
+                    case 'normal':
+                        buttonContent.innerHTML = `<div class="dash-symbol">-</div>`;
+                        break;
+                    case 'text':
+                        const text = design.texts[i] || `Switch ${i}`;
+                        buttonContent.innerHTML = `<div class="button-text">${text}</div>`;
+                        break;
+                    case 'icon':
+                        if (design.icons[i]) {
+                            // Create fallback SVG in case icon doesn't load
+                            const fallbackSVG = `data:image/svg+xml;base64,${btoa(
+                                `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="24" height="24" fill="#3383f6"/>
+                                    <text x="12" y="16" font-family="Arial" font-size="10" fill="white" text-anchor="middle" alignment-baseline="middle">${i}</text>
+                                </svg>`
+                            )}`;
+
+                            const iconImg = document.createElement('img');
+                            iconImg.src = design.icons[i];
+                            iconImg.alt = `Icon ${i}`;
+                            iconImg.onerror = function () {
+                                this.onerror = null;
+                                this.src = fallbackSVG;
+                            };
+                            buttonContent.appendChild(iconImg);
+                        } else {
+                            buttonContent.innerHTML = `<div class="dash-symbol">-</div>`;
+                        }
+                        break;
+                }
+
+                switchButton.appendChild(buttonContent);
+                previewBox.appendChild(switchButton);
+            }
+        }
+
+        function editDesign(designId) {
+            const designs = JSON.parse(localStorage.getItem('lumiDesigns') || '[]');
+            const design = designs.find(d => d.id === designId);
+
+            if (!design) {
+                alert('Design not found!');
+                return;
+            }
+
+            // Store design data in sessionStorage for editing
+            sessionStorage.setItem('editDesignData', JSON.stringify(design));
+            sessionStorage.setItem('isEditing', 'true');
+            sessionStorage.setItem('editDesignId', designId);
+
+            // Redirect to index.html for editing
+            window.location.href = 'index.html';
+        }
+
+        function deleteDesign(designId, index) {
+            if (confirm('Are you sure you want to delete this design?')) {
+                let allDesigns = JSON.parse(localStorage.getItem('lumiDesigns') || '[]');
+                allDesigns = allDesigns.filter(d => d.id !== designId);
+                localStorage.setItem('lumiDesigns', JSON.stringify(allDesigns));
+
+                // Show success message
+                alert('Design deleted successfully!');
+                location.reload();
+            }
+        }
+
+        // Print All Designs
+        document.getElementById('printAllBtn').addEventListener('click', function () {
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'pm' : 'am';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+
+            const formattedDateTime = `${day}-${month}-${year})(${hours}-${minutes}-${ampm}`;
+            const filename = `Lumi_Switch_Designs(${formattedDateTime})`;
+
+            // Set document title for print
+            const originalTitle = document.title;
+            document.title = filename;
+
+            // Ensure colors are applied before print
+            setTimeout(() => {
+                // Force all colors to be visible for print
+                document.querySelectorAll('.switch-button').forEach(button => {
+                    const color = button.getAttribute('data-color');
+                    if (color) {
+                        button.style.backgroundColor = color;
+                        button.style.setProperty('background-color', color, 'important');
+                    }
+                });
+
+                // Wait a moment for styles to apply, then print
+                setTimeout(() => {
+                    window.print();
+
+                    // Restore original title after print dialog appears
+                    setTimeout(() => {
+                        document.title = originalTitle;
+                    }, 1000);
+                }, 100);
+            }, 100);
+        });
+
+        // Single design print function (if needed)
+        function printSingleDesign(designId) {
+            const cards = document.querySelectorAll('.design-card');
+            cards.forEach(card => {
+                card.style.display = 'none';
+            });
+
+            const targetCard = document.querySelector(`[onclick*="editDesign('${designId}')"]`)?.closest('.design-card');
+            if (targetCard) {
+                targetCard.style.display = 'block';
+                targetCard.style.margin = '0 auto';
+            }
+
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            const filename = `Lumi_Switch_Design_${day}-${month}-${year}`;
+
+            document.title = filename;
+
+            setTimeout(() => {
+                window.print();
+
+                setTimeout(() => {
+                    cards.forEach(card => {
+                        card.style.display = 'block';
+                    });
+                    document.title = 'My Switch Designs';
+                }, 100);
+            }, 100);
+        }
+    </script>
+</body>
+
+</html>

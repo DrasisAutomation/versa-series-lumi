@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lumi Configurator</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --square-bg: #1e293b;
+            --square-border: #e2e8f0;
+            --gap: 3px;
+            --pad: 12px;
+            --radius: 8px;
+            --shadow: 0 10px 30px rgba(2, 6, 23, 0.1);
+            --header-bg: #1e293b;
+            --footer-bg: #1e293b;
+            --text-light: #f8fafc;
+            --accent: #3b82f6;
+            --border-color: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100svh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+            color: #0b1220;
+            background-color: var(--bg);
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--header-bg);
+            color: var(--text-light);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--accent);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Main Content Styles */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .title {
+            color: #1e293b;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        /* Switch Quantity Selection */
+        .switch-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            max-width: 600px;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .switch-option {
+            padding: 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: var(--radius);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .switch-option:hover {
+            border-color: var(--accent);
+            background-color: rgba(59, 130, 246, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .switch-option.selected {
+            border-color: var(--accent);
+            background-color: rgba(59, 130, 246, 0.1);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+
+        /* MAIN PANEL CONTAINER - FIXED 200px SQUARE */
+        .panel-container {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .switch {
+            width: 200px;
+            height: 200px;
+            display: grid;
+            gap: 2px;
+            background: #272727 !important;
+            /* Always black */
+            padding: 4px;
+            border-radius: 4px;
+            border: 2px solid #2f2f2f;
+            transition: all 0.3s ease;
+        }
+
+
+        .switch button {
+            width: 100%;
+            height: 100%;
+            background: #2a2a2a;
+            /* Default button color */
+            border: none;
+            color: #eaeaea;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 3px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            transition: all 0.2s;
+            overflow: hidden;
+        }
+
+        .switch button:hover {
+            background: #3a3a3a;
+        }
+
+        .switch button:active {
+            background: #4aa3ff;
+            color: #000;
+        }
+
+        .button-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            gap: 5px;
+        }
+
+        .button-content img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            /* Make icons white */
+            filter: brightness(0) invert(1);
+        }
+
+        .button-text {
+            font-size: 12px;
+            text-align: center;
+            word-break: break-word;
+            padding: 0 4px;
+        }
+
+        .dash-symbol {
+            font-size: 24px;
+            font-weight: bold;
+            color: #eaeaea;
+        }
+
+        /* ROW × COLUMN DEFINITIONS */
+        .s1 {
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+        }
+
+        .s2 {
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(2, 1fr);
+        }
+
+        .s3 {
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(3, 1fr);
+        }
+
+        .s4 {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+        }
+
+        .s6 {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+        }
+
+        .s8 {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+        }
+
+        /* Configuration Panel */
+        .config-panel {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            width: min(92vmin, 520px);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .config-section {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .config-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        .color-options {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.2s, border-color 0.2s;
+            position: relative;
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.selected {
+            border-color: #1e293b;
+            transform: scale(1.1);
+        }
+
+        /* Custom color option styles */
+        .color-option.custom {
+            background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
+            border: 2px dashed #cbd5e1;
+        }
+
+        .color-option.custom::after {
+            content: '+';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+        }
+
+        .color-option.custom.selected {
+            border: 2px solid #1e293b;
+            animation: rainbow 2s linear infinite;
+        }
+
+        @keyframes rainbow {
+            0% { border-color: #ff0000; }
+            17% { border-color: #ffff00; }
+            33% { border-color: #00ff00; }
+            50% { border-color: #00ffff; }
+            67% { border-color: #0000ff; }
+            83% { border-color: #ff00ff; }
+            100% { border-color: #ff0000; }
+        }
+
+        /* Custom color picker container */
+        .custom-color-picker-container {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f8fafc;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .custom-color-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .custom-color-title {
+            font-weight: 500;
+            color: #475569;
+        }
+
+        .custom-color-inputs {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .color-picker-input {
+            width: 60px;
+            height: 40px;
+            padding: 2px;
+            border: 2px solid #cbd5e1;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .hex-input-container {
+            flex: 1;
+        }
+
+        .hex-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .color-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            border: 2px solid #cbd5e1;
+            margin-top: 0.5rem;
+        }
+
+        .color-name-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .custom-color-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .custom-color-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .apply-color-btn {
+            background-color: #10b981;
+            color: white;
+        }
+
+        .apply-color-btn:hover {
+            background-color: #059669;
+        }
+
+        .cancel-color-btn {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .cancel-color-btn:hover {
+            background-color: #dc2626;
+        }
+
+        .engraving-options {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .engraving-option {
+            flex: 1;
+            min-width: 120px;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: var(--radius);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .engraving-option:hover {
+            border-color: var(--accent);
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+
+        .engraving-option.selected {
+            border-color: var(--accent);
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Text Input Grid */
+        .text-input-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .text-input-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .text-input-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #475569;
+        }
+
+        .text-input {
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            width: 100%;
+            box-sizing: border-box;
+            max-width: 100%;
+            text-align: center;
+        }
+
+        /* Icon Grid */
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .icon-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 100px;
+            background-color: white;
+            position: relative;
+        }
+
+        .icon-option:hover {
+            border-color: var(--accent);
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+
+        .icon-option.selected {
+            border-color: var(--accent);
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .icon-plus {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
+
+        .icon-text {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .icon-preview-small {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            margin-bottom: 0.5rem;
+            /* Make icons white in config panel */
+            background-color: #ffffff;
+            padding: 4px;
+            border-radius: 4px;
+        }
+
+        .save-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .save-btn {
+            padding: 0.75rem 2rem;
+            background-color: #10b981;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .save-btn:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: var(--radius);
+            width: min(95vw, 800px);
+            height: min(80vh, 600px);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .close-modal:hover {
+            color: #1e293b;
+        }
+/* Update the icon styles to add shadow/outline */
+.button-content img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    /* Make icons white with subtle shadow/outline */
+    filter: brightness(0) invert(1) drop-shadow(0 0 1px rgba(0, 0, 0, 1));
+}
+        .button-text {
+            font-size: 12px;
+            text-align: center;
+            word-break: break-word;
+            padding: 0 4px;
+             filter: brightness(0) invert(1) drop-shadow(0 0 1px rgba(0, 0, 0, 1));
+        }
+
+
+        .icon-grid-modal {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 0.75rem;
+            overflow-y: auto;
+            flex: 1;
+            padding: 0.5rem;
+        }
+
+        .icon-modal-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            aspect-ratio: 1 / 1;
+            background-color: white;
+        }
+
+        .icon-modal-option:hover {
+            border-color: var(--accent);
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+
+        .icon-modal-option.selected {
+            border-color: var(--accent);
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .icon-preview {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            margin-bottom: 0.5rem;
+        }
+
+        .icon-number {
+            font-size: 0.7rem;
+            color: #475569;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--text-light);
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .copyright {
+            margin-top: 1rem;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* Cancel Edit Button */
+        .cancel-btn-container {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .cancel-edit-btn {
+            background-color: #6b7280;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .cancel-edit-btn:hover {
+            background-color: #4b5563;
+            transform: translateY(-2px);
+        }
+
+        /* Switch Label Modal */
+        #switchLabelModal .modal-content {
+            max-width: 500px;
+            height: auto;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .switch-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .engraving-options {
+                flex-direction: column;
+            }
+
+            .icon-grid-modal {
+                grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            }
+
+            .custom-color-inputs {
+                flex-direction: column;
+            }
+
+            .color-picker-input {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .switch-options {
+                grid-template-columns: 1fr;
+            }
+
+            .icon-grid-modal {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <span>Switch Panel Configurator</span>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="window.location.href='designs.html'">View Designs</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <h1 class="title">Switch Panel Configurator</h1>
+
+        <!-- Switch Quantity Selection -->
+        <div class="switch-options">
+            <div class="switch-option selected" data-switches="1">1 Switch</div>
+            <div class="switch-option" data-switches="2">2 Switches</div>
+            <div class="switch-option" data-switches="3">3 Switches</div>
+            <div class="switch-option" data-switches="4">4 Switches</div>
+            <div class="switch-option" data-switches="6">6 Switches</div>
+            <div class="switch-option" data-switches="8">8 Switches</div>
+        </div>
+
+        <!-- Switch Panel Preview - Fixed 200px Square -->
+        <div class="panel-container">
+            <div class="switch s1" id="switchContainer">
+                <!-- Switches will be dynamically generated here -->
+            </div>
+        </div>
+
+        <!-- Configuration Panel -->
+        <div class="config-panel">
+            <div class="config-section">
+                <h3 class="section-title">Select Color</h3>
+                <div class="color-options" id="colorOptions">
+                    <!-- 10 preset colors + custom option -->
+                    <div class="color-option" style="background-color: #000000;" data-color="#000000" data-name="Black">
+                    </div>
+                    <div class="color-option selected" style="background-color: #ff3b30;" data-color="#ff3b30" data-name="Red"></div>
+                    <div class="color-option" style="background-color: #ff9500;" data-color="#ff9500" data-name="Orange"></div>
+                    <div class="color-option" style="background-color: #ffcc00;" data-color="#ffcc00" data-name="Yellow"></div>
+                    <div class="color-option" style="background-color: #34c759;" data-color="#34c759" data-name="Green"></div>
+                    <div class="color-option" style="background-color: #007aff;" data-color="#007aff" data-name="Blue"></div>
+                    <div class="color-option" style="background-color: #5856d6;" data-color="#5856d6" data-name="Purple"></div>
+                    <div class="color-option" style="background-color: #ff2d55;" data-color="#ff2d55" data-name="Pink"></div>
+                    <div class="color-option" style="background-color: #8e8e93;" data-color="#8e8e93" data-name="Gray"></div>
+                    <div class="color-option" style="background-color: #d4af37;" data-color="#d4af37" data-name="Gold"></div>
+                    <div class="color-option custom" id="customColorOption" data-color="custom" data-name="Custom"></div>
+                </div>
+
+                <!-- Custom Color Picker -->
+                <div class="custom-color-picker-container" id="customColorPicker">
+                    <div class="custom-color-header">
+                        <div class="custom-color-title">Choose Custom Color</div>
+                    </div>
+                    <div class="custom-color-inputs">
+                        <input type="color" id="colorPicker" class="color-picker-input" value="#ff3b30">
+                        <div class="hex-input-container">
+                            <input type="text" id="hexInput" class="hex-input" placeholder="#FF3B30" maxlength="7">
+                        </div>
+                    </div>
+                    <div id="colorPreview" class="color-preview" style="background-color: #ff3b30;"></div>
+                    <input type="text" id="colorNameInput" class="color-name-input" placeholder="Enter color name (optional)" maxlength="20">
+                    <div class="custom-color-actions">
+                        <button class="custom-color-btn cancel-color-btn" id="cancelColorBtn">Cancel</button>
+                        <button class="custom-color-btn apply-color-btn" id="applyColorBtn">Apply Color</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="config-section">
+                <h3 class="section-title">Select Engraving Type</h3>
+                <div class="engraving-options">
+                    <div class="engraving-option selected" data-type="normal">Normal</div>
+                    <div class="engraving-option" data-type="text">Text</div>
+                    <div class="engraving-option" data-type="icon">Icon</div>
+                </div>
+
+                <!-- Normal Engraving -->
+                <div id="normal-options" class="engraving-type-options">
+                    <p>Default switch labels will be displayed (Switch 1, Switch 2, etc.)</p>
+                </div>
+
+                <!-- Text Engraving -->
+                <div id="text-options" class="engraving-type-options" style="display: none;">
+                    <p>Enter text for each switch (max 7 characters):</p>
+                    <div class="text-input-grid" id="text-inputs-container">
+                        <!-- Text inputs will be dynamically generated -->
+                    </div>
+                </div>
+
+                <!-- Icon Engraving -->
+                <div id="icon-options" class="engraving-type-options" style="display: none;">
+                    <p>Select icons for each switch:</p>
+                    <div class="icon-grid" id="icon-inputs-container">
+                        <!-- Icon options will be dynamically generated -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="save-btn-container">
+                <button class="save-btn" id="save-config">Save Configuration</button>
+            </div>
+            <div class="cancel-btn-container" style="display: none;" id="cancelEditContainer">
+                <button class="cancel-edit-btn" id="cancelEditBtn">Cancel Edit</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Icon Selection Modal -->
+    <div class="modal" id="iconModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Select an Icon</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="icon-grid-modal" id="iconGridModal">
+                <!-- Icons will be dynamically generated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Switch Label Modal -->
+    <div class="modal" id="switchLabelModal">
+        <div class="modal-content" style="max-width: 500px; height: auto;">
+            <div class="modal-header">
+                <h2 class="modal-title">Save Design</h2>
+                <button class="close-modal" onclick="closeSwitchLabelModal()">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 20px;">
+                <div style="margin-bottom: 20px;">
+                    <label for="switchLabelInput" style="display: block; margin-bottom: 8px; font-weight: 500;">
+                        Enter a name/label for this switch design:
+                    </label>
+                    <input type="text" id="switchLabelInput" placeholder="e.g., Living Room Switch, Office Switch, etc."
+                        maxlength="30"
+                        style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;">
+                    <div style="text-align: right; margin-top: 4px; color: #64748b; font-size: 12px;">
+                        <span id="charCount">0</span>/30 characters
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px;">
+                    <button onclick="closeSwitchLabelModal()"
+                        style="padding: 10px 20px; background: #e2e8f0; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
+                        Cancel
+                    </button>
+                    <button onclick="confirmSaveDesign()"
+                        style="padding: 10px 20px; background: #10b981; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
+                        Save Design
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="logo">
+                <div class="logo-icon">L</div>
+                <span>Lumi Configurator</span>
+            </div>
+            <div class="copyright">
+                &copy; 2023 Lumi Configurator. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Configuration state
+        let currentConfig = {
+            switches: 1,
+            color: '#ff3b30',
+            colorName: 'Red',
+            engravingType: 'normal',
+            texts: {},
+            icons: {}
+        };
+
+        let currentIconPosition = null;
+        let isCustomColor = false;
+        let customColorData = {
+            hex: '#ff3b30',
+            name: 'Custom Red'
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeSwitchOptions();
+            initializeColorOptions();
+            initializeEngravingOptions();
+            initializeSaveButton();
+            initializeIconModal();
+            initializeCustomColorPicker();
+
+            // Block page if not logged in
+            const isLoggedIn = sessionStorage.getItem('lumi_authenticated');
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+            }
+
+            // Check for edit mode
+            checkEditMode();
+
+            // Initial render
+            updateSwitchPanel();
+            updateEngravingInputs();
+        });
+
+        // Switch quantity selection
+        function initializeSwitchOptions() {
+            const switchOptions = document.querySelectorAll('.switch-option');
+            switchOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    // Remove selected class from all options
+                    switchOptions.forEach(opt => opt.classList.remove('selected'));
+                    // Add selected class to clicked option
+                    option.classList.add('selected');
+
+                    // Update current config
+                    const switchCount = parseInt(option.getAttribute('data-switches'));
+                    currentConfig.switches = switchCount;
+
+                    // Update switch panel
+                    updateSwitchPanel();
+
+                    // Update engraving options based on switch count
+                    updateEngravingInputs();
+                });
+            });
+        }
+
+        // Color selection
+        function initializeColorOptions() {
+            const colorOptions = document.querySelectorAll('.color-option:not(.custom)');
+            const customColorOption = document.getElementById('customColorOption');
+            
+            colorOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    selectPresetColor(option);
+                });
+            });
+
+            // Custom color option
+            customColorOption.addEventListener('click', () => {
+                openCustomColorPicker();
+            });
+        }
+
+        function selectPresetColor(option) {
+            // Remove selected class from all color options
+            document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+            // Add selected class to clicked option
+            option.classList.add('selected');
+            
+            // Hide custom color picker if open
+            document.getElementById('customColorPicker').style.display = 'none';
+            
+            // Update current config
+            currentConfig.color = option.getAttribute('data-color');
+            currentConfig.colorName = option.getAttribute('data-name');
+            isCustomColor = false;
+            
+            // Update switch button colors
+            updateSwitchColor();
+        }
+
+        function initializeCustomColorPicker() {
+            const colorPicker = document.getElementById('colorPicker');
+            const hexInput = document.getElementById('hexInput');
+            const colorPreview = document.getElementById('colorPreview');
+            const applyColorBtn = document.getElementById('applyColorBtn');
+            const cancelColorBtn = document.getElementById('cancelColorBtn');
+            
+            // Color picker change event
+            colorPicker.addEventListener('input', function() {
+                const color = this.value.toUpperCase();
+                hexInput.value = color;
+                colorPreview.style.backgroundColor = color;
+            });
+            
+            // Hex input change event
+            hexInput.addEventListener('input', function() {
+                let color = this.value.toUpperCase();
+                
+                // Add # if missing
+                if (!color.startsWith('#')) {
+                    color = '#' + color;
+                    this.value = color;
+                }
+                
+                // Validate hex color
+                if (/^#[0-9A-F]{6}$/i.test(color)) {
+                    colorPicker.value = color;
+                    colorPreview.style.backgroundColor = color;
+                }
+            });
+            
+            // Apply color button
+            applyColorBtn.addEventListener('click', applyCustomColor);
+            
+            // Cancel button
+            cancelColorBtn.addEventListener('click', function() {
+                document.getElementById('customColorPicker').style.display = 'none';
+                document.getElementById('customColorOption').classList.remove('selected');
+                
+                // If we had a previous color selected, restore it
+                if (!isCustomColor) {
+                    const lastSelected = document.querySelector('.color-option.selected:not(.custom)');
+                    if (lastSelected) {
+                        lastSelected.classList.add('selected');
+                    } else {
+                        // Default to red if nothing was selected
+                        document.querySelector('.color-option[data-color="#ff3b30"]').classList.add('selected');
+                    }
+                }
+            });
+            
+            // Enter key in hex input
+            hexInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    applyCustomColor();
+                }
+            });
+        }
+
+        function openCustomColorPicker() {
+            const customColorPicker = document.getElementById('customColorPicker');
+            const colorPicker = document.getElementById('colorPicker');
+            const hexInput = document.getElementById('hexInput');
+            const colorPreview = document.getElementById('colorPreview');
+            const colorNameInput = document.getElementById('colorNameInput');
+            
+            // Remove selected from all colors
+            document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+            
+            // Add selected to custom option
+            document.getElementById('customColorOption').classList.add('selected');
+            
+            // Set current values
+            if (isCustomColor) {
+                colorPicker.value = customColorData.hex;
+                hexInput.value = customColorData.hex;
+                colorPreview.style.backgroundColor = customColorData.hex;
+                colorNameInput.value = customColorData.name || '';
+            } else {
+                // Use current color as starting point
+                colorPicker.value = currentConfig.color;
+                hexInput.value = currentConfig.color.toUpperCase();
+                colorPreview.style.backgroundColor = currentConfig.color;
+                colorNameInput.value = 'Custom ' + currentConfig.colorName;
+            }
+            
+            // Show picker
+            customColorPicker.style.display = 'block';
+        }
+
+        function applyCustomColor() {
+            const hexInput = document.getElementById('hexInput');
+            const colorNameInput = document.getElementById('colorNameInput');
+            const colorPicker = document.getElementById('colorPicker');
+            
+            let color = hexInput.value.toUpperCase();
+            
+            // Validate hex color
+            if (!/^#[0-9A-F]{6}$/i.test(color)) {
+                alert('Please enter a valid hex color code (e.g., #FF3B30)');
+                return;
+            }
+            
+            // Store custom color data
+            customColorData.hex = color;
+            customColorData.name = colorNameInput.value.trim() || 'Custom Color';
+            
+            // Update current config
+            currentConfig.color = color;
+            currentConfig.colorName = customColorData.name;
+            isCustomColor = true;
+            
+            // Hide picker
+            document.getElementById('customColorPicker').style.display = 'none';
+            
+            // Update custom color option to show selected color
+            const customOption = document.getElementById('customColorOption');
+            customOption.style.background = color;
+            customOption.classList.add('selected');
+            
+            // Update switch button colors
+            updateSwitchColor();
+        }
+
+        // Update switch button colors
+        function updateSwitchColor() {
+            const buttons = document.querySelectorAll('#switchContainer button');
+            buttons.forEach(button => {
+                // Set button background to selected color
+                button.style.backgroundColor = currentConfig.color;
+            });
+        }
+
+        // Engraving type selection
+        function initializeEngravingOptions() {
+            const engravingOptions = document.querySelectorAll('.engraving-option');
+            engravingOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    // Remove selected class from all options
+                    engravingOptions.forEach(opt => opt.classList.remove('selected'));
+                    // Add selected class to clicked option
+                    option.classList.add('selected');
+
+                    // Get the selected type
+                    const selectedType = option.getAttribute('data-type');
+                    currentConfig.engravingType = selectedType;
+
+                    // Hide all options
+                    document.querySelectorAll('.engraving-type-options').forEach(opt => {
+                        opt.style.display = 'none';
+                    });
+
+                    // Show selected options
+                    document.getElementById(`${selectedType}-options`).style.display = 'block';
+
+                    // Update engraving inputs based on switch count
+                    updateEngravingInputs();
+
+                    // Update preview
+                    updateSwitchPanel();
+                });
+            });
+        }
+
+        // Update engraving inputs based on switch count
+        function updateEngravingInputs() {
+            const switchCount = currentConfig.switches;
+
+            // Text inputs
+            const textContainer = document.getElementById('text-inputs-container');
+            textContainer.innerHTML = '';
+
+            // Icon inputs
+            const iconContainer = document.getElementById('icon-inputs-container');
+            iconContainer.innerHTML = '';
+
+            // Generate inputs for each switch
+            for (let i = 1; i <= switchCount; i++) {
+                // Text input
+                const textItem = document.createElement('div');
+                textItem.className = 'text-input-item';
+                textItem.innerHTML = `
+                    <div class="text-input-label">Switch ${i}</div>
+                    <input type="text" class="text-input" data-position="${i}" placeholder="Enter text..." maxlength="7" value="${currentConfig.texts[i] || ''}">
+                `;
+                textContainer.appendChild(textItem);
+
+                // Icon input
+                const iconOption = document.createElement('div');
+                iconOption.className = 'icon-option';
+                iconOption.setAttribute('data-position', i);
+                const iconSrc = currentConfig.icons[i];
+                if (iconSrc) {
+                    iconOption.innerHTML = `
+                        <img src="${iconSrc}" alt="Icon ${i}" class="icon-preview-small">
+                        <div class="icon-text">Switch ${i}</div>
+                    `;
+                    iconOption.classList.add('selected');
+                } else {
+                    iconOption.innerHTML = `
+                        <div class="icon-plus">+</div>
+                        <div class="icon-text">Switch ${i}</div>
+                    `;
+                }
+                iconContainer.appendChild(iconOption);
+            }
+
+            // Add event listeners to new inputs
+            addTextInputListeners();
+            addIconOptionListeners();
+        }
+
+        // Add event listeners to text inputs
+        function addTextInputListeners() {
+            const textInputs = document.querySelectorAll('.text-input');
+            textInputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    const position = input.getAttribute('data-position');
+                    currentConfig.texts[position] = input.value;
+                    updateSwitchPanel();
+                });
+            });
+        }
+
+        // Add event listeners to icon options
+        function addIconOptionListeners() {
+            const iconOptions = document.querySelectorAll('.icon-option');
+            iconOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    currentIconPosition = option.getAttribute('data-position');
+                    openIconModal();
+                });
+            });
+        }
+
+        // Update switch panel based on current config
+        function updateSwitchPanel() {
+            const container = document.getElementById('switchContainer');
+            const switchCount = currentConfig.switches;
+
+            // Clear container
+            container.innerHTML = '';
+
+            // Update grid class
+            container.className = `switch s${switchCount}`;
+
+            // Container stays black, don't change background color here
+            container.style.backgroundColor = '#000000';
+
+            // Create switches
+            for (let i = 1; i <= switchCount; i++) {
+                const switchButton = document.createElement('button');
+
+                // Apply selected color to button
+                switchButton.style.backgroundColor = currentConfig.color;
+
+                const buttonContent = document.createElement('div');
+                buttonContent.className = 'button-content';
+
+                // Set content based on engraving type
+                switch (currentConfig.engravingType) {
+                    case 'normal':
+                        // Only show dash for normal engraving
+                        buttonContent.innerHTML = `<div class="dash-symbol">-</div>`;
+                        break;
+                    case 'text':
+                        const text = currentConfig.texts[i] || `Switch ${i}`;
+                        buttonContent.innerHTML = `<div class="button-text">${text}</div>`;
+                        break;
+                    case 'icon':
+                        if (currentConfig.icons[i]) {
+                            const fallbackSVG = `data:image/svg+xml;base64,${btoa(
+                                `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" fill="#3383f6"/>
+                        <text x="20" y="24" font-family="Arial" font-size="14" fill="white" text-anchor="middle" alignment-baseline="middle">${i}</text>
+                    </svg>`
+                            )}`;
+
+                            const iconImg = document.createElement('img');
+                            iconImg.src = currentConfig.icons[i];
+                            iconImg.alt = `Icon ${i}`;
+                            iconImg.onerror = function () {
+                                this.onerror = null;
+                                this.src = fallbackSVG;
+                            };
+                            buttonContent.appendChild(iconImg);
+                            // No text under icon - icon only
+                        } else {
+                            buttonContent.innerHTML = `<div class="dash-symbol">-</div>`;
+                        }
+                        break;
+                }
+
+                switchButton.appendChild(buttonContent);
+                container.appendChild(switchButton);
+            }
+        }
+        // Icon modal functionality
+        function initializeIconModal() {
+            const modal = document.getElementById('iconModal');
+            const closeModal = document.querySelector('.close-modal');
+            const iconGridModal = document.getElementById('iconGridModal');
+
+            // Clear existing icons
+            iconGridModal.innerHTML = '';
+
+            // Generate 82 icons
+            for (let i = 1; i <= 82; i++) {
+                const iconOption = document.createElement('div');
+                iconOption.className = 'icon-modal-option';
+                iconOption.setAttribute('data-icon', i);
+
+                const iconImg = document.createElement('img');
+                iconImg.className = 'icon-preview';
+                iconImg.alt = `Icon ${i}`;
+                iconImg.src = `./assets/icons/${i}.png`;
+
+                // Handle missing icons
+                iconImg.onerror = () => {
+                    // Create SVG placeholder
+                    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                    svg.setAttribute('width', '48');
+                    svg.setAttribute('height', '48');
+                    svg.setAttribute('viewBox', '0 0 48 48');
+
+                    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                    rect.setAttribute('width', '48');
+                    rect.setAttribute('height', '48');
+                    rect.setAttribute('fill', '#3383f6');
+
+                    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    text.setAttribute('x', '24');
+                    text.setAttribute('y', '28');
+                    text.setAttribute('font-family', 'Arial');
+                    text.setAttribute('font-size', '14');
+                    text.setAttribute('fill', 'white');
+                    text.setAttribute('text-anchor', 'middle');
+                    text.setAttribute('alignment-baseline', 'middle');
+                    text.textContent = i;
+
+                    svg.appendChild(rect);
+                    svg.appendChild(text);
+
+                    // Replace img with svg
+                    iconImg.parentNode.replaceChild(svg, iconImg);
+                };
+
+                const iconNumber = document.createElement('div');
+                iconNumber.className = 'icon-number';
+                iconNumber.textContent = `${i}`;
+
+                iconOption.appendChild(iconImg);
+                iconOption.appendChild(iconNumber);
+
+                iconOption.addEventListener('click', () => {
+                    selectIcon(i);
+                });
+
+                iconGridModal.appendChild(iconOption);
+            }
+
+            // Close modal events
+            closeModal.addEventListener('click', closeIconModal);
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeIconModal();
+                }
+            });
+        }
+
+        function openIconModal() {
+            document.getElementById('iconModal').style.display = 'flex';
+        }
+
+        function closeIconModal() {
+            document.getElementById('iconModal').style.display = 'none';
+        }
+
+        function selectIcon(iconNumber) {
+            if (currentIconPosition) {
+                // Create a proper fallback SVG for the onerror handler
+                const fallbackSVG = `data:image/svg+xml;base64,${btoa(
+                    `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="32" height="32" fill="#3383f6"/>
+                <text x="16" y="20" font-family="Arial" font-size="12" fill="white" text-anchor="middle" alignment-baseline="middle">${iconNumber}</text>
+            </svg>`
+                )}`;
+
+                // Store icon in config
+                currentConfig.icons[currentIconPosition] = `./assets/icons/${iconNumber}.png`;
+
+                // Update UI
+                const iconOption = document.querySelector(`.icon-option[data-position="${currentIconPosition}"]`);
+                if (iconOption) {
+                    iconOption.innerHTML = `
+                <img src="./assets/icons/${iconNumber}.png" alt="Icon ${iconNumber}" class="icon-preview-small" onerror="this.onerror=null; this.src='${fallbackSVG}'">
+                <div class="icon-text">Switch ${currentIconPosition}</div>
+            `;
+                    iconOption.classList.add('selected');
+                }
+
+                // Update preview
+                updateSwitchPanel();
+            }
+
+            closeIconModal();
+        }
+
+        // Save button functionality
+        function initializeSaveButton() {
+            const saveBtn = document.getElementById('save-config');
+            const newSaveBtn = saveBtn.cloneNode(true);
+            saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+
+            newSaveBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                openSwitchLabelModal();
+            });
+        }
+
+        // Switch label modal functions
+        function openSwitchLabelModal() {
+            const modal = document.getElementById('switchLabelModal');
+            const input = document.getElementById('switchLabelInput');
+            const charCount = document.getElementById('charCount');
+
+            input.value = '';
+            charCount.textContent = '0';
+
+            modal.style.display = 'flex';
+            setTimeout(() => input.focus(), 100);
+        }
+
+        function closeSwitchLabelModal() {
+            document.getElementById('switchLabelModal').style.display = 'none';
+        }
+
+        function confirmSaveDesign() {
+            const switchLabel = document.getElementById('switchLabelInput').value.trim();
+
+            if (!switchLabel) {
+                alert('Please enter a name/label for this design.');
+                return;
+            }
+
+            if (switchLabel.length > 30) {
+                alert('Label must be 30 characters or less.');
+                return;
+            }
+
+            saveDesign(switchLabel);
+            closeSwitchLabelModal();
+        }
+
+        function saveDesign(switchLabel) {
+            // Get preview HTML
+            const container = document.getElementById('switchContainer');
+            const previewHTML = container.outerHTML;
+
+            // Create design object
+            const design = {
+                id: Date.now().toString(),
+                switches: currentConfig.switches,
+                color: currentConfig.color,
+                colorName: currentConfig.colorName,
+                engravingType: currentConfig.engravingType,
+                texts: { ...currentConfig.texts },
+                icons: { ...currentConfig.icons },
+                previewHTML: previewHTML,
+                switchLabel: switchLabel,
+                timestamp: new Date().toISOString(),
+                isCustomColor: isCustomColor,
+                customColorData: isCustomColor ? customColorData : null
+            };
+
+            // Save to localStorage
+            let designs = JSON.parse(localStorage.getItem('lumiDesigns') || '[]');
+            designs.push(design);
+            localStorage.setItem('lumiDesigns', JSON.stringify(designs));
+
+            alert(`Design saved successfully as: "${switchLabel}"`);
+
+            // Optionally redirect to designs page
+            // window.location.href = 'designs.html';
+        }
+
+        // Character counter
+        document.addEventListener('DOMContentLoaded', function () {
+            const switchLabelInput = document.getElementById('switchLabelInput');
+            if (switchLabelInput) {
+                switchLabelInput.addEventListener('input', function () {
+                    const charCount = document.getElementById('charCount');
+                    charCount.textContent = this.value.length;
+                });
+
+                switchLabelInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        confirmSaveDesign();
+                    }
+                });
+            }
+        });
+
+        // Edit mode functionality
+        function checkEditMode() {
+            const isEditing = sessionStorage.getItem('isEditing') === 'true';
+            const editDesignDataStr = sessionStorage.getItem('editDesignData');
+
+            if (isEditing && editDesignDataStr) {
+                try {
+                    const design = JSON.parse(editDesignDataStr);
+
+                    // Update title
+                    const titleElement = document.querySelector('.title');
+                    if (titleElement) {
+                        titleElement.innerHTML = `Edit Design <span style="font-size: 14px; color: #3b82f6;">(${design.switchLabel})</span>`;
+                    }
+
+                    // Apply design configuration
+                    applyDesignConfiguration(design);
+
+                    // Modify save button for edit mode
+                    modifySaveButtonForEditMode(design.id);
+
+                    // Show cancel button
+                    document.getElementById('cancelEditContainer').style.display = 'flex';
+
+                } catch (error) {
+                    console.error('Error loading edit data:', error);
+                }
+            }
+        }
+        function applyDesignConfiguration(design) {
+            // Set switches
+            const switchOption = document.querySelector(`.switch-option[data-switches="${design.switches}"]`);
+            if (switchOption) {
+                switchOption.click();
+            }
+
+            // Set color
+            setTimeout(() => {
+                // Check if it was a custom color
+                if (design.isCustomColor && design.customColorData) {
+                    // Restore custom color
+                    isCustomColor = true;
+                    customColorData = design.customColorData;
+                    currentConfig.color = design.color;
+                    currentConfig.colorName = design.colorName;
+                    
+                    // Update custom color option
+                    const customOption = document.getElementById('customColorOption');
+                    customOption.style.background = design.color;
+                    customOption.classList.add('selected');
+                    
+                    // Update switch color
+                    updateSwitchColor();
+                } else {
+                    // Select preset color
+                    const colorOption = document.querySelector(`.color-option[data-color="${design.color}"]`);
+                    if (colorOption) {
+                        colorOption.click();
+                    }
+                }
+            }, 100);
+
+            // Set engraving type and populate data
+            setTimeout(() => {
+                const engravingOption = document.querySelector(`.engraving-option[data-type="${design.engravingType}"]`);
+                if (engravingOption) {
+                    engravingOption.click();
+
+                    // Populate data
+                    setTimeout(() => {
+                        currentConfig.texts = { ...design.texts };
+                        currentConfig.icons = { ...design.icons };
+
+                        // Update preview
+                        updateSwitchPanel();
+                        updateEngravingInputs();
+                    }, 200);
+                }
+            }, 200);
+        }
+        function modifySaveButtonForEditMode(designId) {
+            const saveBtn = document.getElementById('save-config');
+            saveBtn.textContent = 'Update Design';
+            saveBtn.style.backgroundColor = '#3b82f6';
+
+            const newSaveBtn = saveBtn.cloneNode(true);
+            saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+
+            newSaveBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const switchLabel = prompt("Enter a new name for this updated design:", "Updated Design");
+                if (!switchLabel) return;
+
+                // Update current config from UI
+                updateCurrentConfigFromUI();
+
+                // Get preview HTML
+                const container = document.getElementById('switchContainer');
+                const previewHTML = container.outerHTML;
+
+                // Create updated design
+                const updatedDesign = {
+                    id: designId,
+                    switches: currentConfig.switches,
+                    color: currentConfig.color,
+                    colorName: currentConfig.colorName,
+                    engravingType: currentConfig.engravingType,
+                    texts: { ...currentConfig.texts },
+                    icons: { ...currentConfig.icons },
+                    previewHTML: previewHTML,
+                    switchLabel: switchLabel,
+                    timestamp: new Date().toISOString(),
+                    isCustomColor: isCustomColor,
+                    customColorData: isCustomColor ? customColorData : null
+                };
+
+                // Update in localStorage
+                let designs = JSON.parse(localStorage.getItem('lumiDesigns') || '[]');
+                const index = designs.findIndex(d => d.id === designId);
+
+                if (index !== -1) {
+                    designs[index] = updatedDesign;
+                    localStorage.setItem('lumiDesigns', JSON.stringify(designs));
+
+                    // Clear edit mode
+                    sessionStorage.removeItem('editDesignData');
+                    sessionStorage.removeItem('isEditing');
+                    sessionStorage.removeItem('editDesignId');
+
+                    alert('Design updated successfully!');
+                    window.location.href = 'designs.html';
+                }
+            });
+        }
+
+        function updateCurrentConfigFromUI() {
+            // Update texts
+            const textInputs = document.querySelectorAll('.text-input');
+            textInputs.forEach(input => {
+                const position = input.getAttribute('data-position');
+                currentConfig.texts[position] = input.value;
+            });
+        }
+
+        // Cancel edit button
+        const cancelEditBtn = document.getElementById('cancelEditBtn');
+        if (cancelEditBtn) {
+            cancelEditBtn.addEventListener('click', () => {
+                if (confirm('Cancel editing? All unsaved changes will be lost.')) {
+                    sessionStorage.removeItem('editDesignData');
+                    sessionStorage.removeItem('isEditing');
+                    sessionStorage.removeItem('editDesignId');
+                    window.location.href = 'index.html';
+                }
+            });
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('switchLabelModal');
+            if (e.target === modal) {
+                closeSwitchLabelModal();
+            }
+        });
+    </script>
+</body>
+</html>
