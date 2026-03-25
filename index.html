@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Lumi Configurator</title>
+    <title>Lumi Versa Configurator</title>
     <style>
         :root {
             --bg: #ffffff;
@@ -188,7 +188,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 8px;
+            padding: 4px;
             transition: all 0.2s;
             overflow: hidden;
         }
@@ -202,36 +202,214 @@
             color: #000;
         }
 
-        .button-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            gap: 5px;
-        }
 
-        .button-content img {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-            /* Make icons white */
-            filter: brightness(0) invert(1);
-        }
+/* Target only 8-switch configuration with text+icon */
+.switch.s8 button .button-content.text-with-icon-layout img {
+    width: 28px !important;
+    height: 28px !important;
+}
 
-        .button-text {
-            font-size: 12px;
-            text-align: center;
-            word-break: break-word;
-            padding: 0 4px;
-        }
+.switch.s8 button .button-content.text-with-icon-layout .button-text {
+    font-size: 9px;
+    margin-top: -2px;
+    transform: translateY(-1px);
+}
 
-        .dash-symbol {
-            font-size: 24px;
-            font-weight: bold;
-            color: #eaeaea;
-        }
+/* Adjust gap for 8-switch text+icon */
+.switch.s8 button .button-content.text-with-icon-layout {
+    gap: 1px;
+}
+
+
+
+
+/* Grid layouts for text inputs, icon inputs, and textWithIcon inputs */
+.text-inputs-grid,
+.icon-inputs-grid,
+.textWithIcon-inputs-grid {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+/* 1 switch - 1x1 */
+.text-inputs-grid.s1,
+.icon-inputs-grid.s1,
+.textWithIcon-inputs-grid.s1 {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}
+
+/* 2 switches - 2x1 */
+.text-inputs-grid.s2,
+.icon-inputs-grid.s2,
+.textWithIcon-inputs-grid.s2 {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+}
+
+/* 3 switches - 3x1 */
+.text-inputs-grid.s3,
+.icon-inputs-grid.s3,
+.textWithIcon-inputs-grid.s3 {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr);
+}
+
+/* 4 switches - 2x2 */
+.text-inputs-grid.s4,
+.icon-inputs-grid.s4,
+.textWithIcon-inputs-grid.s4 {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+/* 6 switches - 3x2 */
+.text-inputs-grid.s6,
+.icon-inputs-grid.s6,
+.textWithIcon-inputs-grid.s6 {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+/* 8 switches - 4x2 */
+.text-inputs-grid.s8,
+.icon-inputs-grid.s8,
+.textWithIcon-inputs-grid.s8 {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+}
+
+/* Style for text input items */
+.text-input-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.text-input-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #475569;
+    text-align: center;
+}
+
+.text-input {
+    padding: 0.75rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Style for icon options */
+.icon-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-height: 100px;
+    background-color: white;
+    position: relative;
+}
+
+.icon-option:hover {
+    border-color: var(--accent);
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+.icon-option.selected {
+    border-color: var(--accent);
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+.icon-preview-small {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+}
+
+.icon-plus {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #64748b;
+    margin-bottom: 0.5rem;
+}
+
+.icon-text {
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+
+
+
+.textWithIcon-text-input {
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
+}
+/* Target only text with icon engraving type */
+.switch button .button-content:has(img) .button-text {
+    margin-top: -6px;
+    position: relative;
+    top: -2px;
+}
+
+/* Alternative using more specific selector */
+.button-content:has(img) .button-text {
+    margin-top: -4px;
+    transform: translateY(-2px);
+}
+.textWithIcon-option {
+    position: relative;
+}
+
+.textWithIcon-option .icon-plus,
+.textWithIcon-option img.textWithIcon-icon {
+    pointer-events: auto;
+    cursor: pointer;
+}
+.button-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    gap: 2px;  /* Reduced from 5px to 2px */
+}
+
+.button-content img {
+    width: 32px;  /* Reduced from 40px to 32px for better proportion */
+    height: 32px;
+    object-fit: contain;
+    filter: brightness(0) invert(1) drop-shadow(0 0 1px rgba(0, 0, 0, 1));
+    margin-bottom: 2px;  /* Added to fine-tune spacing */
+}
+
+.button-text {
+    font-size: 10px;  /* Slightly reduced from 12px for better fit */
+    text-align: center;
+    word-break: break-word;
+    padding: 0 2px;
+    filter: brightness(0) invert(1) drop-shadow(0 0 1px rgba(0, 0, 0, 1));
+    line-height: 1.2;
+}
+
+.dash-symbol {
+    font-size: 24px;
+    font-weight: bold;
+    color: #eaeaea;
+}
 
         /* ROW × COLUMN DEFINITIONS */
         .s1 {
@@ -342,13 +520,33 @@
         }
 
         @keyframes rainbow {
-            0% { border-color: #ff0000; }
-            17% { border-color: #ffff00; }
-            33% { border-color: #00ff00; }
-            50% { border-color: #00ffff; }
-            67% { border-color: #0000ff; }
-            83% { border-color: #ff00ff; }
-            100% { border-color: #ff0000; }
+            0% {
+                border-color: #ff0000;
+            }
+
+            17% {
+                border-color: #ffff00;
+            }
+
+            33% {
+                border-color: #00ff00;
+            }
+
+            50% {
+                border-color: #00ffff;
+            }
+
+            67% {
+                border-color: #0000ff;
+            }
+
+            83% {
+                border-color: #ff00ff;
+            }
+
+            100% {
+                border-color: #ff0000;
+            }
         }
 
         /* Custom color picker container */
@@ -363,8 +561,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .custom-color-header {
@@ -648,20 +853,22 @@
         .close-modal:hover {
             color: #1e293b;
         }
-/* Update the icon styles to add shadow/outline */
-.button-content img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-    /* Make icons white with subtle shadow/outline */
-    filter: brightness(0) invert(1) drop-shadow(0 0 1px rgba(0, 0, 0, 1));
-}
+
+        /* Update the icon styles to add shadow/outline */
+        .button-content img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            /* Make icons white with subtle shadow/outline */
+            filter: brightness(0) invert(1) drop-shadow(0 0 1px rgba(0, 0, 0, 1));
+        }
+
         .button-text {
             font-size: 12px;
             text-align: center;
             word-break: break-word;
             padding: 0 4px;
-             filter: brightness(0) invert(1) drop-shadow(0 0 1px rgba(0, 0, 0, 1));
+            filter: brightness(0) invert(1) drop-shadow(0 0 1px rgba(0, 0, 0, 1));
         }
 
 
@@ -806,6 +1013,58 @@
                 grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
             }
         }
+
+        /* Text With Icon Styles */
+        .textWithIcon-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 120px;
+            background-color: white;
+            position: relative;
+        }
+
+        .textWithIcon-option:hover {
+            border-color: var(--accent);
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+
+        .textWithIcon-option.selected {
+            border-color: var(--accent);
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .textWithIcon-icon {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            margin-bottom: 8px;
+        }
+
+        .textWithIcon-text-input {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.75rem;
+            margin-top: 8px;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .textWithIcon-plus {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
     </style>
 </head>
 
@@ -849,16 +1108,26 @@
                     <!-- 10 preset colors + custom option -->
                     <div class="color-option" style="background-color: #000000;" data-color="#000000" data-name="Black">
                     </div>
-                    <div class="color-option selected" style="background-color: #ff3b30;" data-color="#ff3b30" data-name="Red"></div>
-                    <div class="color-option" style="background-color: #ff9500;" data-color="#ff9500" data-name="Orange"></div>
-                    <div class="color-option" style="background-color: #ffcc00;" data-color="#ffcc00" data-name="Yellow"></div>
-                    <div class="color-option" style="background-color: #34c759;" data-color="#34c759" data-name="Green"></div>
-                    <div class="color-option" style="background-color: #007aff;" data-color="#007aff" data-name="Blue"></div>
-                    <div class="color-option" style="background-color: #5856d6;" data-color="#5856d6" data-name="Purple"></div>
-                    <div class="color-option" style="background-color: #ff2d55;" data-color="#ff2d55" data-name="Pink"></div>
-                    <div class="color-option" style="background-color: #8e8e93;" data-color="#8e8e93" data-name="Gray"></div>
-                    <div class="color-option" style="background-color: #d4af37;" data-color="#d4af37" data-name="Gold"></div>
-                    <div class="color-option custom" id="customColorOption" data-color="custom" data-name="Custom"></div>
+                    <div class="color-option selected" style="background-color: #ff3b30;" data-color="#ff3b30"
+                        data-name="Red"></div>
+                    <div class="color-option" style="background-color: #ff9500;" data-color="#ff9500"
+                        data-name="Orange"></div>
+                    <div class="color-option" style="background-color: #ffcc00;" data-color="#ffcc00"
+                        data-name="Yellow"></div>
+                    <div class="color-option" style="background-color: #34c759;" data-color="#34c759" data-name="Green">
+                    </div>
+                    <div class="color-option" style="background-color: #007aff;" data-color="#007aff" data-name="Blue">
+                    </div>
+                    <div class="color-option" style="background-color: #5856d6;" data-color="#5856d6"
+                        data-name="Purple"></div>
+                    <div class="color-option" style="background-color: #ff2d55;" data-color="#ff2d55" data-name="Pink">
+                    </div>
+                    <div class="color-option" style="background-color: #8e8e93;" data-color="#8e8e93" data-name="Gray">
+                    </div>
+                    <div class="color-option" style="background-color: #d4af37;" data-color="#d4af37" data-name="Gold">
+                    </div>
+                    <div class="color-option custom" id="customColorOption" data-color="custom" data-name="Custom">
+                    </div>
                 </div>
 
                 <!-- Custom Color Picker -->
@@ -873,7 +1142,8 @@
                         </div>
                     </div>
                     <div id="colorPreview" class="color-preview" style="background-color: #ff3b30;"></div>
-                    <input type="text" id="colorNameInput" class="color-name-input" placeholder="Enter color name (optional)" maxlength="20">
+                    <input type="text" id="colorNameInput" class="color-name-input"
+                        placeholder="Enter color name (optional)" maxlength="20">
                     <div class="custom-color-actions">
                         <button class="custom-color-btn cancel-color-btn" id="cancelColorBtn">Cancel</button>
                         <button class="custom-color-btn apply-color-btn" id="applyColorBtn">Apply Color</button>
@@ -883,10 +1153,12 @@
 
             <div class="config-section">
                 <h3 class="section-title">Select Engraving Type</h3>
+                <!-- Replace the existing engraving-options div with this -->
                 <div class="engraving-options">
                     <div class="engraving-option selected" data-type="normal">Normal</div>
                     <div class="engraving-option" data-type="text">Text</div>
                     <div class="engraving-option" data-type="icon">Icon</div>
+                    <div class="engraving-option" data-type="textWithIcon">Text With Icon</div>
                 </div>
 
                 <!-- Normal Engraving -->
@@ -896,7 +1168,7 @@
 
                 <!-- Text Engraving -->
                 <div id="text-options" class="engraving-type-options" style="display: none;">
-                    <p>Enter text for each switch (max 7 characters):</p>
+                    <p>Enter text for each switch (max 6 characters):</p>
                     <div class="text-input-grid" id="text-inputs-container">
                         <!-- Text inputs will be dynamically generated -->
                     </div>
@@ -909,6 +1181,15 @@
                         <!-- Icon options will be dynamically generated -->
                     </div>
                 </div>
+
+                <!-- Text With Icon Engraving (hidden by default) -->
+                <div id="textWithIcon-options" class="engraving-type-options" style="display: none;">
+                    <p>Select icons and enter text for each switch (max 6 characters):</p>
+                    <div class="icon-grid" id="textWithIcon-inputs-container">
+                        <!-- Will be dynamically generated -->
+                    </div>
+                </div>
+
             </div>
 
             <div class="save-btn-container">
@@ -987,9 +1268,10 @@
             colorName: 'Red',
             engravingType: 'normal',
             texts: {},
-            icons: {}
+            icons: {},
+            textWithIcons: {}  // Add this: stores { position: { iconPath, text } }
         };
-
+        let currentIconType = 'icon';
         let currentIconPosition = null;
         let isCustomColor = false;
         let customColorData = {
@@ -1047,7 +1329,7 @@
         function initializeColorOptions() {
             const colorOptions = document.querySelectorAll('.color-option:not(.custom)');
             const customColorOption = document.getElementById('customColorOption');
-            
+
             colorOptions.forEach(option => {
                 option.addEventListener('click', () => {
                     selectPresetColor(option);
@@ -1065,15 +1347,15 @@
             document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
             // Add selected class to clicked option
             option.classList.add('selected');
-            
+
             // Hide custom color picker if open
             document.getElementById('customColorPicker').style.display = 'none';
-            
+
             // Update current config
             currentConfig.color = option.getAttribute('data-color');
             currentConfig.colorName = option.getAttribute('data-name');
             isCustomColor = false;
-            
+
             // Update switch button colors
             updateSwitchColor();
         }
@@ -1084,39 +1366,39 @@
             const colorPreview = document.getElementById('colorPreview');
             const applyColorBtn = document.getElementById('applyColorBtn');
             const cancelColorBtn = document.getElementById('cancelColorBtn');
-            
+
             // Color picker change event
-            colorPicker.addEventListener('input', function() {
+            colorPicker.addEventListener('input', function () {
                 const color = this.value.toUpperCase();
                 hexInput.value = color;
                 colorPreview.style.backgroundColor = color;
             });
-            
+
             // Hex input change event
-            hexInput.addEventListener('input', function() {
+            hexInput.addEventListener('input', function () {
                 let color = this.value.toUpperCase();
-                
+
                 // Add # if missing
                 if (!color.startsWith('#')) {
                     color = '#' + color;
                     this.value = color;
                 }
-                
+
                 // Validate hex color
                 if (/^#[0-9A-F]{6}$/i.test(color)) {
                     colorPicker.value = color;
                     colorPreview.style.backgroundColor = color;
                 }
             });
-            
+
             // Apply color button
             applyColorBtn.addEventListener('click', applyCustomColor);
-            
+
             // Cancel button
-            cancelColorBtn.addEventListener('click', function() {
+            cancelColorBtn.addEventListener('click', function () {
                 document.getElementById('customColorPicker').style.display = 'none';
                 document.getElementById('customColorOption').classList.remove('selected');
-                
+
                 // If we had a previous color selected, restore it
                 if (!isCustomColor) {
                     const lastSelected = document.querySelector('.color-option.selected:not(.custom)');
@@ -1128,9 +1410,9 @@
                     }
                 }
             });
-            
+
             // Enter key in hex input
-            hexInput.addEventListener('keypress', function(e) {
+            hexInput.addEventListener('keypress', function (e) {
                 if (e.key === 'Enter') {
                     applyCustomColor();
                 }
@@ -1143,13 +1425,13 @@
             const hexInput = document.getElementById('hexInput');
             const colorPreview = document.getElementById('colorPreview');
             const colorNameInput = document.getElementById('colorNameInput');
-            
+
             // Remove selected from all colors
             document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
-            
+
             // Add selected to custom option
             document.getElementById('customColorOption').classList.add('selected');
-            
+
             // Set current values
             if (isCustomColor) {
                 colorPicker.value = customColorData.hex;
@@ -1163,7 +1445,7 @@
                 colorPreview.style.backgroundColor = currentConfig.color;
                 colorNameInput.value = 'Custom ' + currentConfig.colorName;
             }
-            
+
             // Show picker
             customColorPicker.style.display = 'block';
         }
@@ -1172,32 +1454,32 @@
             const hexInput = document.getElementById('hexInput');
             const colorNameInput = document.getElementById('colorNameInput');
             const colorPicker = document.getElementById('colorPicker');
-            
+
             let color = hexInput.value.toUpperCase();
-            
+
             // Validate hex color
             if (!/^#[0-9A-F]{6}$/i.test(color)) {
                 alert('Please enter a valid hex color code (e.g., #FF3B30)');
                 return;
             }
-            
+
             // Store custom color data
             customColorData.hex = color;
             customColorData.name = colorNameInput.value.trim() || 'Custom Color';
-            
+
             // Update current config
             currentConfig.color = color;
             currentConfig.colorName = customColorData.name;
             isCustomColor = true;
-            
+
             // Hide picker
             document.getElementById('customColorPicker').style.display = 'none';
-            
+
             // Update custom color option to show selected color
             const customOption = document.getElementById('customColorOption');
             customOption.style.background = color;
             customOption.classList.add('selected');
-            
+
             // Update switch button colors
             updateSwitchColor();
         }
@@ -1241,55 +1523,114 @@
                 });
             });
         }
+// Update engraving inputs based on switch count
+function updateEngravingInputs() {
+    const switchCount = currentConfig.switches;
+    
+    // Get grid class based on switch count
+    let gridClass = '';
+    switch(switchCount) {
+        case 1: gridClass = 's1'; break;
+        case 2: gridClass = 's2'; break;
+        case 3: gridClass = 's3'; break;
+        case 4: gridClass = 's4'; break;
+        case 6: gridClass = 's6'; break;
+        case 8: gridClass = 's8'; break;
+        default: gridClass = 's1';
+    }
 
-        // Update engraving inputs based on switch count
-        function updateEngravingInputs() {
-            const switchCount = currentConfig.switches;
+    // Text inputs container
+    const textContainer = document.getElementById('text-inputs-container');
+    textContainer.innerHTML = '';
+    textContainer.className = `text-inputs-grid ${gridClass}`;
 
-            // Text inputs
-            const textContainer = document.getElementById('text-inputs-container');
-            textContainer.innerHTML = '';
+    // Icon inputs container
+    const iconContainer = document.getElementById('icon-inputs-container');
+    iconContainer.innerHTML = '';
+    iconContainer.className = `icon-inputs-grid ${gridClass}`;
 
-            // Icon inputs
-            const iconContainer = document.getElementById('icon-inputs-container');
-            iconContainer.innerHTML = '';
+    // Text With Icon inputs container
+    const textWithIconContainer = document.getElementById('textWithIcon-inputs-container');
+    if (textWithIconContainer) {
+        textWithIconContainer.innerHTML = '';
+        textWithIconContainer.className = `textWithIcon-inputs-grid ${gridClass}`;
+    }
 
-            // Generate inputs for each switch
-            for (let i = 1; i <= switchCount; i++) {
-                // Text input
-                const textItem = document.createElement('div');
-                textItem.className = 'text-input-item';
-                textItem.innerHTML = `
-                    <div class="text-input-label">Switch ${i}</div>
-                    <input type="text" class="text-input" data-position="${i}" placeholder="Enter text..." maxlength="7" value="${currentConfig.texts[i] || ''}">
-                `;
-                textContainer.appendChild(textItem);
+    // Initialize textWithIcons if needed
+    if (!currentConfig.textWithIcons) {
+        currentConfig.textWithIcons = {};
+    }
 
-                // Icon input
-                const iconOption = document.createElement('div');
-                iconOption.className = 'icon-option';
-                iconOption.setAttribute('data-position', i);
-                const iconSrc = currentConfig.icons[i];
-                if (iconSrc) {
-                    iconOption.innerHTML = `
-                        <img src="${iconSrc}" alt="Icon ${i}" class="icon-preview-small">
-                        <div class="icon-text">Switch ${i}</div>
-                    `;
-                    iconOption.classList.add('selected');
-                } else {
-                    iconOption.innerHTML = `
-                        <div class="icon-plus">+</div>
-                        <div class="icon-text">Switch ${i}</div>
-                    `;
-                }
-                iconContainer.appendChild(iconOption);
-            }
+    // Create array of switch positions
+    const positions = [];
+    for (let i = 1; i <= switchCount; i++) {
+        positions.push(i);
+    }
 
-            // Add event listeners to new inputs
-            addTextInputListeners();
-            addIconOptionListeners();
+    // Generate inputs for each switch position
+    positions.forEach(i => {
+        // Text input
+        const textItem = document.createElement('div');
+        textItem.className = 'text-input-item';
+        textItem.innerHTML = `
+            <div class="text-input-label">Switch ${i}</div>
+           <input type="text" class="text-input" data-position="${i}" placeholder="Enter text..." maxlength="6" value="${escapeHtml(currentConfig.texts[i] || '')}">
+        `;
+        textContainer.appendChild(textItem);
+
+        // Icon input
+        const iconOption = document.createElement('div');
+        iconOption.className = 'icon-option';
+        iconOption.setAttribute('data-position', i);
+        const iconSrc = currentConfig.icons[i];
+        if (iconSrc) {
+            iconOption.innerHTML = `
+                <img src="${iconSrc}" alt="Icon ${i}" class="icon-preview-small">
+                <div class="icon-text">Switch ${i}</div>
+            `;
+            iconOption.classList.add('selected');
+        } else {
+            iconOption.innerHTML = `
+                <div class="icon-plus">+</div>
+                <div class="icon-text">Switch ${i}</div>
+            `;
         }
+        iconContainer.appendChild(iconOption);
 
+        // Text With Icon input
+        if (textWithIconContainer) {
+            const textWithIconOption = document.createElement('div');
+            textWithIconOption.className = 'icon-option textWithIcon-option';
+            textWithIconOption.setAttribute('data-position', i);
+            textWithIconOption.setAttribute('data-type', 'textWithIcon');
+            
+            const existingData = currentConfig.textWithIcons[i] || {};
+            const hasIcon = existingData.iconPath;
+            const textValue = existingData.text || '';
+            
+            if (hasIcon) {
+                textWithIconOption.innerHTML = `
+                    <img src="${existingData.iconPath}" alt="Icon ${i}" class="icon-preview-small textWithIcon-icon">
+                   <input type="text" class="text-input textWithIcon-text-input" data-text-position="${i}" placeholder="Enter text..." maxlength="6" value="${escapeHtml(textValue)}">
+                    <div class="icon-text">Switch ${i}</div>
+                `;
+                textWithIconOption.classList.add('selected');
+            } else {
+                textWithIconOption.innerHTML = `
+                    <div class="icon-plus textWithIcon-plus">+</div>
+                    <input type="text" class="text-input textWithIcon-text-input" data-text-position="${i}" placeholder="Enter text..." maxlength="6" value="${escapeHtml(textValue)}">
+                    <div class="icon-text">Switch ${i}</div>
+                `;
+            }
+            textWithIconContainer.appendChild(textWithIconOption);
+        }
+    });
+
+    // Add event listeners
+    addTextInputListeners();
+    addIconOptionListeners();
+    addTextWithIconListeners();
+}
         // Add event listeners to text inputs
         function addTextInputListeners() {
             const textInputs = document.querySelectorAll('.text-input');
@@ -1312,7 +1653,92 @@
                 });
             });
         }
-
+        // Add event listeners for text with icon options
+// Add event listeners for text with icon options
+function addTextWithIconListeners() {
+    const textWithIconOptions = document.querySelectorAll('.textWithIcon-option');
+    
+    textWithIconOptions.forEach(option => {
+        const position = option.getAttribute('data-position');
+        
+        // Store reference to the text input
+        const textInput = option.querySelector('.textWithIcon-text-input');
+        
+        // CRITICAL: Add click listener to the text input to stop propagation
+        if (textInput) {
+            // Remove any existing listeners to avoid duplicates
+            const newTextInput = textInput.cloneNode(true);
+            textInput.parentNode.replaceChild(newTextInput, textInput);
+            
+            // Add fresh input handler
+            newTextInput.addEventListener('input', (e) => {
+                e.stopPropagation();
+                if (!currentConfig.textWithIcons[position]) {
+                    currentConfig.textWithIcons[position] = {};
+                }
+                currentConfig.textWithIcons[position].text = e.target.value;
+                updateSwitchPanel();
+            });
+            
+            // CRITICAL: Stop click from bubbling to parent
+            newTextInput.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+            
+            newTextInput.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
+            });
+            
+            // Update the reference
+            option.querySelector = function() { return newTextInput; };
+        }
+        
+        // Remove existing click listener from option to avoid duplicates
+        const newOption = option.cloneNode(true);
+        option.parentNode.replaceChild(newOption, option);
+        
+        // Add click listener to the option container (for icon selection)
+        newOption.addEventListener('click', (e) => {
+            // Check if the click target is the text input or any of its children
+            if (e.target.classList && e.target.classList.contains('textWithIcon-text-input')) {
+                e.stopPropagation();
+                return;
+            }
+            // Also check if clicking on the input via closest
+            if (e.target.closest && e.target.closest('.textWithIcon-text-input')) {
+                e.stopPropagation();
+                return;
+            }
+            
+            // Open modal for icon selection
+            currentIconPosition = newOption.getAttribute('data-position');
+            currentIconType = 'textWithIcon';
+            openIconModal();
+        });
+        
+        // Restore the text input reference in the new option
+        const restoredTextInput = newOption.querySelector('.textWithIcon-text-input');
+        if (restoredTextInput) {
+            restoredTextInput.addEventListener('input', (e) => {
+                e.stopPropagation();
+                if (!currentConfig.textWithIcons[position]) {
+                    currentConfig.textWithIcons[position] = {};
+                }
+                currentConfig.textWithIcons[position].text = e.target.value;
+                updateSwitchPanel();
+            });
+            
+            restoredTextInput.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+            
+            restoredTextInput.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
+            });
+        }
+    });
+}  
+        
         // Update switch panel based on current config
         function updateSwitchPanel() {
             const container = document.getElementById('switchContainer');
@@ -1369,6 +1795,42 @@
                             buttonContent.innerHTML = `<div class="dash-symbol">-</div>`;
                         }
                         break;
+                    case 'textWithIcon':
+    const textWithIconData = currentConfig.textWithIcons[i];
+    if (textWithIconData && textWithIconData.iconPath) {
+        const fallbackSVG = `data:image/svg+xml;base64,${btoa(
+            `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="40" height="40" fill="#3383f6"/>
+                <text x="20" y="24" font-family="Arial" font-size="14" fill="white" text-anchor="middle" alignment-baseline="middle">${i}</text>
+            </svg>`
+        )}`;
+        
+        const iconImg = document.createElement('img');
+        iconImg.src = textWithIconData.iconPath;
+        iconImg.alt = `Icon ${i}`;
+        iconImg.onerror = function() {
+            this.onerror = null;
+            this.src = fallbackSVG;
+        };
+        buttonContent.appendChild(iconImg);
+        
+        const textSpan = document.createElement('div');
+        textSpan.className = 'button-text';
+        textSpan.textContent = textWithIconData.text || `Switch ${i}`;
+        buttonContent.appendChild(textSpan);
+        
+        // Add class for styling
+        buttonContent.classList.add('text-with-icon-layout');
+    } else {
+        buttonContent.innerHTML = `<div class="dash-symbol">-</div>`;
+        if (textWithIconData && textWithIconData.text) {
+            const textSpan = document.createElement('div');
+            textSpan.className = 'button-text';
+            textSpan.textContent = textWithIconData.text;
+            buttonContent.appendChild(textSpan);
+        }
+    }
+    break;
                 }
 
                 switchButton.appendChild(buttonContent);
@@ -1448,9 +1910,9 @@
             });
         }
 
-        function openIconModal() {
-            document.getElementById('iconModal').style.display = 'flex';
-        }
+function openIconModal() {
+    document.getElementById('iconModal').style.display = 'flex';
+}
 
         function closeIconModal() {
             document.getElementById('iconModal').style.display = 'none';
@@ -1458,7 +1920,6 @@
 
         function selectIcon(iconNumber) {
             if (currentIconPosition) {
-                // Create a proper fallback SVG for the onerror handler
                 const fallbackSVG = `data:image/svg+xml;base64,${btoa(
                     `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="32" height="32" fill="#3383f6"/>
@@ -1466,23 +1927,53 @@
             </svg>`
                 )}`;
 
-                // Store icon in config
-                currentConfig.icons[currentIconPosition] = `./assets/icons/${iconNumber}.png`;
+                const iconPath = `./assets/icons/${iconNumber}.png`;
 
-                // Update UI
-                const iconOption = document.querySelector(`.icon-option[data-position="${currentIconPosition}"]`);
-                if (iconOption) {
-                    iconOption.innerHTML = `
-                <img src="./assets/icons/${iconNumber}.png" alt="Icon ${iconNumber}" class="icon-preview-small" onerror="this.onerror=null; this.src='${fallbackSVG}'">
-                <div class="icon-text">Switch ${currentIconPosition}</div>
-            `;
-                    iconOption.classList.add('selected');
+                if (currentIconType === 'textWithIcon') {
+                    // Store in textWithIcons
+                    if (!currentConfig.textWithIcons[currentIconPosition]) {
+                        currentConfig.textWithIcons[currentIconPosition] = {};
+                    }
+                    currentConfig.textWithIcons[currentIconPosition].iconPath = iconPath;
+
+                    // Update UI
+                    const option = document.querySelector(`.textWithIcon-option[data-position="${currentIconPosition}"]`);
+                    if (option) {
+                        const textValue = currentConfig.textWithIcons[currentIconPosition].text || '';
+                        option.innerHTML = `
+                    <img src="${iconPath}" alt="Icon ${iconNumber}" class="icon-preview-small textWithIcon-icon" onerror="this.onerror=null; this.src='${fallbackSVG}'">
+                   <input type="text" class="text-input textWithIcon-text-input" data-text-position="${currentIconPosition}" placeholder="Enter text..." maxlength="6" value="${escapeHtml(textValue)}">
+                    <div class="icon-text">Switch ${currentIconPosition}</div>
+                `;
+                        option.classList.add('selected');
+
+                        // Re-attach input listener
+                        const newTextInput = option.querySelector('.textWithIcon-text-input');
+                        if (newTextInput) {
+                            newTextInput.addEventListener('input', (e) => {
+                                if (!currentConfig.textWithIcons[currentIconPosition]) {
+                                    currentConfig.textWithIcons[currentIconPosition] = {};
+                                }
+                                currentConfig.textWithIcons[currentIconPosition].text = e.target.value;
+                                updateSwitchPanel();
+                            });
+                        }
+                    }
+                } else if (currentIconType === 'icon') {
+                    // Original icon logic
+                    currentConfig.icons[currentIconPosition] = iconPath;
+                    const iconOption = document.querySelector(`.icon-option[data-position="${currentIconPosition}"]`);
+                    if (iconOption) {
+                        iconOption.innerHTML = `
+                    <img src="${iconPath}" alt="Icon ${iconNumber}" class="icon-preview-small" onerror="this.onerror=null; this.src='${fallbackSVG}'">
+                    <div class="icon-text">Switch ${currentIconPosition}</div>
+                `;
+                        iconOption.classList.add('selected');
+                    }
                 }
 
-                // Update preview
                 updateSwitchPanel();
             }
-
             closeIconModal();
         }
 
@@ -1532,38 +2023,85 @@
             closeSwitchLabelModal();
         }
 
-        function saveDesign(switchLabel) {
-            // Get preview HTML
-            const container = document.getElementById('switchContainer');
-            const previewHTML = container.outerHTML;
+// In saveDesign() function
+function saveDesign(switchLabel) {
+    const container = document.getElementById('switchContainer');
+    const previewHTML = container.outerHTML;
 
-            // Create design object
-            const design = {
-                id: Date.now().toString(),
-                switches: currentConfig.switches,
-                color: currentConfig.color,
-                colorName: currentConfig.colorName,
-                engravingType: currentConfig.engravingType,
-                texts: { ...currentConfig.texts },
-                icons: { ...currentConfig.icons },
-                previewHTML: previewHTML,
-                switchLabel: switchLabel,
-                timestamp: new Date().toISOString(),
-                isCustomColor: isCustomColor,
-                customColorData: isCustomColor ? customColorData : null
-            };
+    const design = {
+        id: Date.now().toString(),
+        switches: currentConfig.switches,
+        color: currentConfig.color,
+        colorName: currentConfig.colorName,
+        engravingType: currentConfig.engravingType,
+        texts: { ...currentConfig.texts },
+        icons: { ...currentConfig.icons },
+        textWithIcons: { ...currentConfig.textWithIcons },
+        previewHTML: previewHTML,
+        switchLabel: switchLabel,
+        timestamp: new Date().toISOString(),
+        isCustomColor: isCustomColor,
+        customColorData: isCustomColor ? customColorData : null
+    };
 
-            // Save to localStorage
-            let designs = JSON.parse(localStorage.getItem('lumiDesigns') || '[]');
-            designs.push(design);
-            localStorage.setItem('lumiDesigns', JSON.stringify(designs));
+    let designs = JSON.parse(localStorage.getItem('lumiversasave') || '[]');
+    designs.push(design);
+    localStorage.setItem('lumiversasave', JSON.stringify(designs));
 
-            alert(`Design saved successfully as: "${switchLabel}"`);
+    alert(`Design saved successfully as: "${switchLabel}"`);
+}
 
-            // Optionally redirect to designs page
-            // window.location.href = 'designs.html';
+// In modifySaveButtonForEditMode() function
+function modifySaveButtonForEditMode(designId) {
+    const saveBtn = document.getElementById('save-config');
+    saveBtn.textContent = 'Update Design';
+    saveBtn.style.backgroundColor = '#3b82f6';
+
+    const newSaveBtn = saveBtn.cloneNode(true);
+    saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+
+    newSaveBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const switchLabel = prompt("Enter a new name for this updated design:", "Updated Design");
+        if (!switchLabel) return;
+
+        updateCurrentConfigFromUI();
+
+        const container = document.getElementById('switchContainer');
+        const previewHTML = container.outerHTML;
+
+        const updatedDesign = {
+            id: designId,
+            switches: currentConfig.switches,
+            color: currentConfig.color,
+            colorName: currentConfig.colorName,
+            engravingType: currentConfig.engravingType,
+            texts: { ...currentConfig.texts },
+            icons: { ...currentConfig.icons },
+            previewHTML: previewHTML,
+            switchLabel: switchLabel,
+            timestamp: new Date().toISOString(),
+            isCustomColor: isCustomColor,
+            customColorData: isCustomColor ? customColorData : null
+        };
+
+        let designs = JSON.parse(localStorage.getItem('lumiversasave') || '[]');
+        const index = designs.findIndex(d => d.id === designId);
+
+        if (index !== -1) {
+            designs[index] = updatedDesign;
+            localStorage.setItem('lumiversasave', JSON.stringify(designs));
+
+            sessionStorage.removeItem('editDesignData');
+            sessionStorage.removeItem('isEditing');
+            sessionStorage.removeItem('editDesignId');
+
+            alert('Design updated successfully!');
+            window.location.href = 'designs.html';
         }
-
+    });
+}
         // Character counter
         document.addEventListener('DOMContentLoaded', function () {
             const switchLabelInput = document.getElementById('switchLabelInput');
@@ -1619,23 +2157,16 @@
 
             // Set color
             setTimeout(() => {
-                // Check if it was a custom color
                 if (design.isCustomColor && design.customColorData) {
-                    // Restore custom color
                     isCustomColor = true;
                     customColorData = design.customColorData;
                     currentConfig.color = design.color;
                     currentConfig.colorName = design.colorName;
-                    
-                    // Update custom color option
                     const customOption = document.getElementById('customColorOption');
                     customOption.style.background = design.color;
                     customOption.classList.add('selected');
-                    
-                    // Update switch color
                     updateSwitchColor();
                 } else {
-                    // Select preset color
                     const colorOption = document.querySelector(`.color-option[data-color="${design.color}"]`);
                     if (colorOption) {
                         colorOption.click();
@@ -1649,12 +2180,10 @@
                 if (engravingOption) {
                     engravingOption.click();
 
-                    // Populate data
                     setTimeout(() => {
                         currentConfig.texts = { ...design.texts };
                         currentConfig.icons = { ...design.icons };
-
-                        // Update preview
+                        currentConfig.textWithIcons = { ...(design.textWithIcons || {}) }; // Add this
                         updateSwitchPanel();
                         updateEngravingInputs();
                     }, 200);
@@ -1699,13 +2228,12 @@
                 };
 
                 // Update in localStorage
-                let designs = JSON.parse(localStorage.getItem('lumiDesigns') || '[]');
-                const index = designs.findIndex(d => d.id === designId);
+ let designs = JSON.parse(localStorage.getItem('lumiversasave') || '[]');
+const index = designs.findIndex(d => d.id === designId);
 
-                if (index !== -1) {
-                    designs[index] = updatedDesign;
-                    localStorage.setItem('lumiDesigns', JSON.stringify(designs));
-
+if (index !== -1) {
+    designs[index] = updatedDesign;
+    localStorage.setItem('lumiversasave', JSON.stringify(designs));
                     // Clear edit mode
                     sessionStorage.removeItem('editDesignData');
                     sessionStorage.removeItem('isEditing');
@@ -1746,6 +2274,16 @@
                 closeSwitchLabelModal();
             }
         });
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function (m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
     </script>
 </body>
+
 </html>

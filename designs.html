@@ -74,7 +74,7 @@
             padding-bottom: 8px;
         }
 
-        /* Switch Preview Styles - IMPORTANT: Use background-image for print compatibility */
+        /* Switch Preview Styles */
         .preview-container {
             display: flex;
             justify-content: center;
@@ -151,11 +151,9 @@
             justify-content: center;
             padding: 5px;
             overflow: hidden;
-            /* Force color printing */
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
             color-adjust: exact !important;
-            /* For better print quality */
             box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
         }
 
@@ -166,16 +164,20 @@
             justify-content: center;
             width: 100%;
             height: 100%;
-            gap: 3px;
+            gap: 2px;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
+        }
+
+        /* Style for text with icon layout */
+        .button-content.text-with-icon-layout {
+            gap: 2px;
         }
 
         .button-content img {
             width: 24px;
             height: 24px;
             object-fit: contain;
-            /* Important: Use filter for print compatibility */
             filter: brightness(0) invert(1) drop-shadow(0 0 1px rgba(0, 0, 0, 1));
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
@@ -212,7 +214,6 @@
             vertical-align: middle;
             margin-left: 5px;
             -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
             print-color-adjust: exact !important;
         }
 
@@ -339,6 +340,17 @@
             grid-column: 1 / -1;
         }
 
+        /* Text With Icon specific styles for preview */
+        .switch-preview-box .button-content.text-with-icon-layout img {
+            width: 28px;
+            height: 28px;
+        }
+
+        .switch-preview-box .button-content.text-with-icon-layout .button-text {
+            font-size: 7px;
+            margin-top: 0;
+        }
+
         @media print {
 
             /* Critical: Force all colors to print */
@@ -348,7 +360,7 @@
                 color-adjust: exact !important;
             }
 
-            /* INCREASE SWITCH SIZE IN PRINT - THIS IS THE ONLY CHANGE YOU NEED */
+            /* INCREASE SWITCH SIZE IN PRINT */
             .switch-preview-box.size-1,
             .switch-preview-box.size-2,
             .switch-preview-box.size-3,
@@ -356,9 +368,7 @@
             .switch-preview-box.size-6,
             .switch-preview-box.size-8 {
                 width: 200px !important;
-                /* INCREASED - was 120px */
                 height: 200px !important;
-                /* INCREASED - was 120px */
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
@@ -366,9 +376,7 @@
             /* ALSO increase button content size to match larger switch */
             .button-content img {
                 width: 40px !important;
-                /* INCREASED - was 20px */
                 height: 40px !important;
-                /* INCREASED - was 20px */
                 filter: brightness(0) invert(1) drop-shadow(0 0 0.5px #000) !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
@@ -376,7 +384,6 @@
 
             .button-text {
                 font-size: 12px !important;
-                /* INCREASED - was 7px */
                 color: #ffffff !important;
                 text-shadow: 0 0 1px #000 !important;
                 -webkit-print-color-adjust: exact !important;
@@ -385,30 +392,12 @@
 
             .dash-symbol {
                 font-size: 24px !important;
-                /* INCREASED - was 14px */
                 color: #ffffff !important;
                 text-shadow: 0 0 1px #000 !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
 
-            /* REMOVE this duplicate rule that's overriding your changes: */
-            /* DELETE THIS SECTION - IT'S REDUNDANT AND SETS SMALLER SIZE */
-            /*
-    .switch-preview-box.size-1,
-    .switch-preview-box.size-2,
-    .switch-preview-box.size-3,
-    .switch-preview-box.size-4,
-    .switch-preview-box.size-6,
-    .switch-preview-box.size-8 {
-        width: 100px !important;
-        height: 100px !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-    */
-
-            /* KEEP all your other existing print styles below... */
             body {
                 background: white !important;
                 margin: 0 !important;
@@ -482,8 +471,6 @@
                 border: 2px solid #2f2f2f !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
-                /* REMOVE this fixed height - let it scale with the width/height above */
-                /* height: 400px !important; */
             }
 
             /* Force button colors in print */
@@ -491,7 +478,6 @@
                 background-color: inherit !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
-                /* Add subtle border for better visibility */
                 box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2) !important;
             }
 
@@ -593,6 +579,112 @@
                 width: 100%;
             }
         }
+        /* Add these styles to the <style> section in designs.html */
+
+/* Specific styles for 8-switch configuration with text+icon */
+.switch-preview-box.size-8 .button-content.text-with-icon-layout {
+    gap: 1px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.switch-preview-box.size-8 .button-content.text-with-icon-layout img {
+    width: 22px !important;
+    height: 22px !important;
+    margin-top: -1px !important;
+    margin-bottom: 0;
+}
+
+.switch-preview-box.size-8 .button-content.text-with-icon-layout .button-text {
+    font-size: 6px !important;
+    margin-top: -3px !important;
+    transform: translateY(-1px) !important;
+    line-height: 1.2;
+}
+
+/* Additional adjustment for better spacing in 8-switch */
+.switch-preview-box.size-8 .switch-button {
+    padding: 3px;
+}
+
+/* For 6-switch text+icon configuration as well */
+.switch-preview-box.size-6 .button-content.text-with-icon-layout {
+    gap: 1px;
+}
+
+.switch-preview-box.size-6 .button-content.text-with-icon-layout img {
+    width: 26px;
+    height: 26px;
+    margin-top: -4px;
+}
+
+.switch-preview-box.size-6 .button-content.text-with-icon-layout .button-text {
+    font-size: 8px;
+    margin-top: -3px;
+    transform: translateY(-1px);
+}
+
+/* For 4-switch text+icon configuration */
+.switch-preview-box.size-4 .button-content.text-with-icon-layout {
+    gap: 2px;
+}
+
+.switch-preview-box.size-4 .button-content.text-with-icon-layout img {
+    width: 28px;
+    height: 28px;
+    margin-top: -6px;
+}
+
+.switch-preview-box.size-4 .button-content.text-with-icon-layout .button-text {
+    font-size: 10px;
+    margin-top: -6px;
+}
+
+/* For 3-switch text+icon configuration */
+.switch-preview-box.size-3 .button-content.text-with-icon-layout img {
+    width: 30px;
+    height: 30px;
+    margin-top: -6px;
+}
+
+.switch-preview-box.size-3 .button-content.text-with-icon-layout .button-text {
+    font-size: 10px;
+    margin-top: -6px;
+}
+.switch-preview-box.size-2 .button-content.text-with-icon-layout .button-text {
+    font-size: 10px;
+    margin-top: -6px;
+}
+.switch-preview-box.size-1 .button-content.text-with-icon-layout .button-text {
+    font-size: 10px;
+    margin-top: -6px;
+}
+
+/* For 2-switch text+icon configuration */
+.switch-preview-box.size-2 .button-content.text-with-icon-layout img {
+    width: 32px;
+    height: 32px;
+    margin-top: -6px;
+}
+
+/* For 1-switch text+icon configuration */
+.switch-preview-box.size-1 .button-content.text-with-icon-layout img {
+    width: 40px;
+    height: 40px;
+    margin-top: -6px;
+}
+
+/* Make sure the text with icon layout properly centers content */
+.button-content.text-with-icon-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
     </style>
 </head>
 
@@ -630,7 +722,35 @@
 
     <script>
         const designGrid = document.getElementById('designGrid');
-        const designs = JSON.parse(localStorage.getItem('lumiDesigns') || '[]');
+        
+        // Helper function to escape HTML
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+// Function to format text with icon data for display - SIMPLIFIED VERSION
+function formatTextWithIconDetails(textWithIcons) {
+    if (!textWithIcons || Object.keys(textWithIcons).length === 0) return 'No text entered';
+    
+    const items = [];
+    for (const [position, data] of Object.entries(textWithIcons)) {
+        const text = data.text || '';
+        if (text) {
+            items.push(`Switch ${position}: "${escapeHtml(text)}"`);
+        } else {
+            items.push(`Switch ${position}: (no text)`);
+        }
+    }
+    return items.join('<br>');
+}
+
+     const designs = JSON.parse(localStorage.getItem('lumiversasave') || '[]');
 
         if (designs.length === 0) {
             designGrid.innerHTML = '<div class="empty-message">No designs saved yet. Create your first design in the configurator!</div>';
@@ -640,6 +760,12 @@
                 const card = document.createElement('div');
                 card.className = 'design-card';
 
+                // Get engraving type display name
+                let engravingTypeDisplay = design.engravingType.charAt(0).toUpperCase() + design.engravingType.slice(1);
+                if (design.engravingType === 'textWithIcon') {
+                    engravingTypeDisplay = 'Text With Icon';
+                }
+
                 card.innerHTML = `
                     <div class="summary-container">
                         <!-- Watermarks -->
@@ -648,7 +774,7 @@
                         <div class="watermark watermark-3">LUMI</div>
 
                         <div class="summary-preview">
-                            <h4>${design.switchLabel || 'Untitled Design'}</h4>
+                            <h4>${escapeHtml(design.switchLabel || 'Untitled Design')}</h4>
                             <div class="preview-container">
                                 <div class="switch-preview-box size-${design.switches}" id="preview-${design.id}"></div>
                             </div>
@@ -667,15 +793,15 @@
                                 </tr>
                                 <tr>
                                     <td>Color</td>
-                                    <td>${design.colorName} <span class="color-circle" style="background-color: ${design.color};"></span></td>
+                                    <td>${escapeHtml(design.colorName)} <span class="color-circle" style="background-color: ${design.color};"></span></td>
                                 </tr>
                                 <tr>
                                     <td>Engraving Type</td>
-                                    <td>${design.engravingType.charAt(0).toUpperCase() + design.engravingType.slice(1)}</td>
+                                    <td>${engravingTypeDisplay}</td>
                                 </tr>
                                 <tr>
                                     <td>Design Name</td>
-                                    <td>${design.switchLabel || 'Not specified'}</td>
+                                    <td>${escapeHtml(design.switchLabel || 'Not specified')}</td>
                                 </tr>
                                 <tr>
                                     <td>Date & Time</td>
@@ -684,19 +810,25 @@
                                 ${design.isCustomColor ? `
                                 <tr>
                                     <td>Custom Color</td>
-                                    <td>${design.customColorData?.name || 'Custom'} (#${design.color.replace('#', '')})</td>
+                                    <td>${escapeHtml(design.customColorData?.name || 'Custom')} (#${design.color.replace('#', '')})</td>
                                 </tr>
                                 ` : ''}
                                 ${design.engravingType === 'text' && Object.keys(design.texts).length > 0 ? `
                                 <tr>
                                     <td>Switch Texts</td>
-                                    <td>${Object.entries(design.texts).map(([key, value]) => `Switch ${key}: "${value}"`).join('<br>')}</td>
+                                    <td>${Object.entries(design.texts).map(([key, value]) => `Switch ${key}: "${escapeHtml(value)}"`).join('<br>')}</td>
                                 </tr>
                                 ` : ''}
                                 ${design.engravingType === 'icon' && Object.keys(design.icons).length > 0 ? `
                                 <tr>
                                     <td>Icons Used</td>
-                                    <td>${Object.keys(design.icons).length} icon(s)</td>
+                                    <td>${Object.keys(design.icons).length} icon(s) assigned</td>
+                                </tr>
+                                ` : ''}
+                                ${design.engravingType === 'textWithIcon' && design.textWithIcons && Object.keys(design.textWithIcons).length > 0 ? `
+                                <tr>
+                                    <td>Text & Icons</td>
+                                    <td>${formatTextWithIconDetails(design.textWithIcons)}</td>
                                 </tr>
                                 ` : ''}
                             </table>
@@ -743,7 +875,7 @@
                         break;
                     case 'text':
                         const text = design.texts[i] || `Switch ${i}`;
-                        buttonContent.innerHTML = `<div class="button-text">${text}</div>`;
+                        buttonContent.innerHTML = `<div class="button-text">${escapeHtml(text)}</div>`;
                         break;
                     case 'icon':
                         if (design.icons[i]) {
@@ -767,6 +899,41 @@
                             buttonContent.innerHTML = `<div class="dash-symbol">-</div>`;
                         }
                         break;
+                    case 'textWithIcon':
+                        const textWithIconData = design.textWithIcons ? design.textWithIcons[i] : null;
+                        if (textWithIconData && textWithIconData.iconPath) {
+                            const fallbackSVG = `data:image/svg+xml;base64,${btoa(
+                                `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="24" height="24" fill="#3383f6"/>
+                                    <text x="12" y="16" font-family="Arial" font-size="10" fill="white" text-anchor="middle" alignment-baseline="middle">${i}</text>
+                                </svg>`
+                            )}`;
+
+                            const iconImg = document.createElement('img');
+                            iconImg.src = textWithIconData.iconPath;
+                            iconImg.alt = `Icon ${i}`;
+                            iconImg.onerror = function () {
+                                this.onerror = null;
+                                this.src = fallbackSVG;
+                            };
+                            buttonContent.appendChild(iconImg);
+                            
+                            const textSpan = document.createElement('div');
+                            textSpan.className = 'button-text';
+                            textSpan.textContent = textWithIconData.text || `Switch ${i}`;
+                            buttonContent.appendChild(textSpan);
+                            
+                            // Add class for styling
+                            buttonContent.classList.add('text-with-icon-layout');
+                        } else {
+                            // No icon, just show dash or text
+                            if (textWithIconData && textWithIconData.text) {
+                                buttonContent.innerHTML = `<div class="button-text">${escapeHtml(textWithIconData.text)}</div>`;
+                            } else {
+                                buttonContent.innerHTML = `<div class="dash-symbol">-</div>`;
+                            }
+                        }
+                        break;
                 }
 
                 switchButton.appendChild(buttonContent);
@@ -775,7 +942,7 @@
         }
 
         function editDesign(designId) {
-            const designs = JSON.parse(localStorage.getItem('lumiDesigns') || '[]');
+         const designs = JSON.parse(localStorage.getItem('lumiversasave') || '[]');
             const design = designs.find(d => d.id === designId);
 
             if (!design) {
@@ -794,9 +961,9 @@
 
         function deleteDesign(designId, index) {
             if (confirm('Are you sure you want to delete this design?')) {
-                let allDesigns = JSON.parse(localStorage.getItem('lumiDesigns') || '[]');
-                allDesigns = allDesigns.filter(d => d.id !== designId);
-                localStorage.setItem('lumiDesigns', JSON.stringify(allDesigns));
+let allDesigns = JSON.parse(localStorage.getItem('lumiversasave') || '[]');
+allDesigns = allDesigns.filter(d => d.id !== designId);
+localStorage.setItem('lumiversasave', JSON.stringify(allDesigns));
 
                 // Show success message
                 alert('Design deleted successfully!');
